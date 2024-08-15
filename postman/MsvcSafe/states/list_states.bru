@@ -1,0 +1,18 @@
+meta {
+  name: list_states
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{path}}/states
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "Name":"Los Ángelesddd",
+    "Active":true
+  }
+}

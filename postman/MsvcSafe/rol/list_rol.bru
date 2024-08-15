@@ -1,0 +1,18 @@
+meta {
+  name: list_rol
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{path}}/rol
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name":"tets",
+    "active":true
+  }
+}

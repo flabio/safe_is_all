@@ -1,0 +1,22 @@
+meta {
+  name: create_emergency_contact
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{path}}/emergency-contact
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "FirstName":"Juan",
+    "LastName":"Cortes",
+    "Phone":"42523523",
+    "UserId":12,
+    "ParentescoId":1,
+    "Active":true
+  }
+}

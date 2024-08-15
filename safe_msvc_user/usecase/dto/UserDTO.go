@@ -1,0 +1,28 @@
+package dto
+
+type UserDTO struct {
+	Id           uint   `json:"id"`
+	FirstName    string `json:"first_name"`
+	FirstSurName string `json:"first_sur_name"`
+	SeconSurName string `json:"secon_sur_name"`
+	Email        string `json:"email"`
+	Address      string `json:"address"`
+	Phone        string `json:"phone"`
+	ZipCode      string `json:"zip_code"`
+	StateId      uint   `json:"state_id"`
+	RolId        uint   `json:"rol_id"`
+	Password     string `json:"password"`
+}
+
+type UserResponseDTO struct {
+	Id           uint   `json:"id"`
+	FirstName    string `json:"first_name"`
+	FirstSurName string `json:"first_sur_name"`
+	SeconSurName string `json:"secon_sur_name"`
+	Email        string `json:"email"`
+	Address      string `json:"address"`
+	Phone        string `json:"phone"`
+	ZipCode      string `json:"zip_code"`
+	StateId      uint   `json:"state_id"`
+	RolId        uint   `json:"rol_id"`
+}

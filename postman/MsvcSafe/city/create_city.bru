@@ -1,0 +1,18 @@
+meta {
+  name: create_city
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3004/api/cities
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "Name":"Los Ángeles",
+    "Active":true
+  }
+}

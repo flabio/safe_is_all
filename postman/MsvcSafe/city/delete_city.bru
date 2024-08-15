@@ -1,0 +1,18 @@
+meta {
+  name: delete_city
+  type: http
+  seq: 4
+}
+
+delete {
+  url: http://localhost:3004/api/cities/2
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "Name":"Los Ángelesddd",
+    "Active":true
+  }
+}

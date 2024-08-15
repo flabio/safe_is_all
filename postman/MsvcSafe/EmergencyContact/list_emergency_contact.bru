@@ -1,0 +1,18 @@
+meta {
+  name: list_emergency_contact
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://localhost:3002/api/emergencycontact/1
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name":"tets",
+    "active":true
+  }
+}

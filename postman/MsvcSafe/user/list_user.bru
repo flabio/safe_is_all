@@ -1,0 +1,18 @@
+meta {
+  name: list_user
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://localhost:3005/api/user
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name":"tets",
+    "active":true
+  }
+}

@@ -1,0 +1,19 @@
+meta {
+  name: delete
+  type: http
+  seq: 4
+}
+
+delete {
+  url: http://localhost:8080/rol/6
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "Id":1,
+    "Name":"student",
+    "Active":true
+  }
+}

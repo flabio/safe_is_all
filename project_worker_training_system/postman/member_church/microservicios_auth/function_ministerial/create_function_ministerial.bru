@@ -1,0 +1,18 @@
+meta {
+  name: create_function_ministerial
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{path}}/function_ministerial/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name":"Miembro de cummunión",
+    "active":true
+  }
+}

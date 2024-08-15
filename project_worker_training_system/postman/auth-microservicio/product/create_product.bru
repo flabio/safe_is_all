@@ -1,0 +1,20 @@
+meta {
+  name: create_product
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8080/api/products
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    
+     "productName":"Laptop",
+      "productDescription":"Best Laptop",
+      "unitPrice":1000
+  }
+}

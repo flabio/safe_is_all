@@ -1,0 +1,18 @@
+meta {
+  name: find_by_city
+  type: http
+  seq: 5
+}
+
+get {
+  url: http://localhost:3004/api/cities/2
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "Name":"Los Ángelesddd",
+    "Active":true
+  }
+}

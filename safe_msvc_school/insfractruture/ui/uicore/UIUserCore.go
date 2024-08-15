@@ -1,0 +1,15 @@
+package uicore
+
+import (
+	"github.com/safe_msvc_user/insfractruture/entities"
+	"github.com/safe_msvc_user/usecase/dto"
+)
+
+type UISchoolCore interface {
+	GetSchoolFindAll() ([]dto.SchoolResponseDTO, error)
+	GetSchoolFindById(id uint) (entities.School, error)
+	GetSchoolFindByEmail(email string) (entities.School, error)
+	CreateSchool(school entities.School) (entities.School, error)
+	UpdateSchool(id uint, school entities.School) (entities.School, error)
+	DeleteSchool(id uint) (bool, error)
+}

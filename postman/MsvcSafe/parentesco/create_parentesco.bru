@@ -1,0 +1,18 @@
+meta {
+  name: create_parentesco
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{path}}/parentesco
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name":"tets",
+    "active":true
+  }
+}

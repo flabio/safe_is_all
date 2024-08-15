@@ -1,0 +1,18 @@
+meta {
+  name: create_user_ministerial
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{path}}/ministerial/user_ministerial
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "user_id":1,
+    "ministerial_id":1
+  }
+}

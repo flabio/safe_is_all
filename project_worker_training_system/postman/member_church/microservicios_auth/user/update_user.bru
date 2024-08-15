@@ -1,0 +1,55 @@
+meta {
+  name: update_user
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{path}}/user/7
+  body: json
+  auth: none
+}
+
+body:json {
+   {
+    "Id": 13,
+      "FirstName": "Leydi Nathaly",
+      "LastName": "Hinestroza Sanclemente",
+      "Identification": "823992",
+      "TypeIdentification": "Cc",
+      "Birthdate": "1987-01-02",
+      "PlaceOfBirth": "Buenaventura",
+      "Address": "Cr 120",
+      "Phone": "3232891714",
+      "Cellphone": "3232891714",
+      "Email": "nathaly23@gmail.com",
+      "Neighborhood": "La Faena",
+      "Locality": "Engativa",
+      "Socioeconomic": 1,
+      "Rh": "o+",
+      "Profession": "Ingeniero de Software",
+      "Company": "BetelSoft",
+      "Position": "Tech Leader ",
+      "CivilStatus": "Casado",
+      "LeadersName": "Jose Diaz",
+      "ConversionDate": "",
+      "WhoInvitedHim": "",
+      "ChurchAttended": true,
+      "ChurchName": "Alianza Cristiana",
+      "MeetingDate": "",
+      "BaptismDate": "",
+      "YourSpouseName": "",
+      "SpouseMemberChurch": false,
+      "DateMarriage": "",
+      "ParentsName": "",
+      "IsMemberParent": false,
+      "ChildrenaName": "",
+      "Allergy": false,
+      "Authorize": true,
+      "Username": "nathaly",
+      "Password": "12345678",
+      "ChurchId": 1,
+      "RolId": 6,
+      "TeamPescaId": 1
+        }
+}

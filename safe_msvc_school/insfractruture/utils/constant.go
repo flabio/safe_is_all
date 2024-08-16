@@ -35,6 +35,7 @@ const (
 	PHONE    = "phone"
 	ZIP_CODE = "zip_code"
 	EMAIL    = "email"
+	ACTIVE   = "active"
 )
 const (
 	NAME_IS_FIELD_REQUIRED    = "The field name is required."

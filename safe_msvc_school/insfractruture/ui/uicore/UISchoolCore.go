@@ -8,7 +8,7 @@ import (
 type UISchoolCore interface {
 	GetSchoolFindAll() ([]dto.SchoolResponseDTO, error)
 	GetSchoolFindById(id uint) (entities.School, error)
-	GetSchoolFindByEmail(email string) (entities.School, error)
+	GetSchoolFindByEmail(id uint, email string) (entities.School, error)
 	CreateSchool(school entities.School) (entities.School, error)
 	UpdateSchool(id uint, school entities.School) (entities.School, error)
 	DeleteSchool(id uint) (bool, error)

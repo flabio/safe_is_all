@@ -1,0 +1,18 @@
+meta {
+  name: list_school
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{path}}/school
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name":"tets",
+    "active":true
+  }
+}

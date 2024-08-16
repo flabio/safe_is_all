@@ -1,0 +1,30 @@
+meta {
+  name: user_delete
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{path}}/user/5
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "first_name":"Flabio",
+    "first_sur_name":"Hinestroza",
+    "second_sur_name":"Sanclemente",
+    "address":"calle 67 #123A - 15",
+    "phone":"3232891714",
+    "zip_code":"11111",
+    "state_id":1,
+    "rol_id":1,
+    "email":"flabiohs@gmail.com",
+    "password":"12345678",
+    "active":true
+  }
+  
+  
+  
+}

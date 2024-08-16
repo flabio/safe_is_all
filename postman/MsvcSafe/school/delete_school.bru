@@ -1,0 +1,21 @@
+meta {
+  name: delete_school
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{path}}/school/3
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name":"tets",
+    "phone":"453643643",
+    "address":"calle 34",
+    "email":"platzi@gmail.com",
+    "active":true
+  }
+}

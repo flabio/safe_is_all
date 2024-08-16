@@ -39,13 +39,18 @@ func (c *OpenConnection) GetSchoolFindById(id uint) (entities.School, error) {
 	defer c.mux.Unlock()
 	return school, result.Error
 }
-func (c *OpenConnection) GetSchoolFindByEmail(email string) (entities.School, error) {
+func (c *OpenConnection) GetSchoolFindByEmail(id uint, email string) (entities.School, error) {
 	var school entities.School
 	c.mux.Lock()
-	result := c.connection.Where(utils.DB_EQUAL_EMAIL_ID, email).Find(&school)
+	query := c.connection.Where(utils.DB_EQUAL_EMAIL_ID, email)
+	if id > 0 {
+		query = query.Where(utils.DB_DIFF_ID, id)
+	}
+	query = query.Find(&school)
+
 	defer database.CloseConnection()
 	defer c.mux.Unlock()
-	return school, result.Error
+	return school, query.Error
 }
 
 func (c *OpenConnection) CreateSchool(school entities.School) (entities.School, error) {

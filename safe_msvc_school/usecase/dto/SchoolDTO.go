@@ -6,6 +6,7 @@ type SchoolDTO struct {
 	Email   string `json:"email"`
 	Address string `json:"address"`
 	Phone   string `json:"phone"`
+	Active  bool   `json:"active"`
 }
 
 type SchoolResponseDTO struct {
@@ -14,4 +15,5 @@ type SchoolResponseDTO struct {
 	Email   string `json:"email"`
 	Address string `json:"address"`
 	Phone   string `json:"phone"`
+	Active  bool   `json:"active"`
 }

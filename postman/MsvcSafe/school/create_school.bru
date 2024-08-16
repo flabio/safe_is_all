@@ -1,0 +1,21 @@
+meta {
+  name: create_school
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{path}}/school
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name":"tets",
+    "phone":"453643643",
+    "address":"calle 34",
+    "email":"udemy@gmail.com",
+    "active":true
+  }
+}

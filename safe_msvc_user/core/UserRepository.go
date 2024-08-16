@@ -39,13 +39,20 @@ func (c *OpenConnection) GetUserFindById(id uint) (entities.User, error) {
 	defer c.mux.Unlock()
 	return user, result.Error
 }
-func (c *OpenConnection) GetUserFindByEmail(email string) (entities.User, error) {
-	var user entities.User
-	c.mux.Lock()
-	result := c.connection.Where(utils.DB_EQUAL_EMAIL_ID, email).Find(&user)
+func (db *OpenConnection) GetUserFindByEmail(id uint, email string) (bool, error) {
+
+	db.mux.Lock()
+	query := db.connection.Where(utils.DB_EQUAL_EMAIL_ID, email)
+	if id > 0 {
+		query = query.Where(utils.DB_DIFF_ID, id)
+	}
+	query = query.Find(&entities.User{})
+	defer db.mux.Unlock()
 	defer database.CloseConnection()
-	defer c.mux.Unlock()
-	return user, result.Error
+	if query.RowsAffected == 0 {
+		return false, query.Error
+	}
+	return true, query.Error
 }
 
 func (c *OpenConnection) CreateUser(user entities.User) (entities.User, error) {

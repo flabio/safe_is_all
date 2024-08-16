@@ -60,7 +60,7 @@ func (s *userService) GetUserFindById(c *fiber.Ctx) error {
 func (s *userService) CreateUser(c *fiber.Ctx) error {
 	var userCreate entities.User
 
-	userDto, msgError := validateUser(s, c)
+	userDto, msgError := validateUser(0, s, c)
 	if msgError != utils.EMPTY {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
 			utils.STATUS:  http.StatusBadRequest,
@@ -98,7 +98,7 @@ func (s *userService) UpdateUser(c *fiber.Ctx) error {
 		})
 	}
 	deepcopier.Copy(result).To(&updatedUser)
-	userDto, msgError := validateUser(s, c)
+	userDto, msgError := validateUser(uint(id), s, c)
 	if msgError != utils.EMPTY {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
 			utils.STATUS:  http.StatusBadRequest,
@@ -141,12 +141,13 @@ func (s *userService) DeleteUser(c *fiber.Ctx) error {
 		})
 	}
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		utils.STATUS: http.StatusOK,
-		utils.DATA:   result,
+		utils.STATUS:  http.StatusOK,
+		utils.MESSAGE: utils.REMOVED,
+		utils.DATA:    result,
 	})
 }
 
-func validateUser(s *userService, c *fiber.Ctx) (dto.UserDTO, string) {
+func validateUser(id uint, s *userService, c *fiber.Ctx) (dto.UserDTO, string) {
 	var userDto dto.UserDTO
 	var msg string = utils.EMPTY
 	body := c.Body()
@@ -163,12 +164,13 @@ func validateUser(s *userService, c *fiber.Ctx) (dto.UserDTO, string) {
 	}
 
 	MapToStructUser(&userDto, dataMap)
-	msg = validateRequired(userDto)
-	if msg != utils.EMPTY {
-		return dto.UserDTO{}, msg
+	msgRequired := validateRequired(userDto)
+	if msgRequired != utils.EMPTY {
+		return dto.UserDTO{}, msgRequired
 	}
-	existEmail, _ := s.uiUser.GetUserFindByEmail(userDto.Email)
-	if existEmail.Email != utils.EMPTY {
+	existEmail, _ := s.uiUser.GetUserFindByEmail(id, userDto.Email)
+
+	if existEmail {
 		msg = utils.EMAIL_ALREADY_EXIST
 	}
 	return userDto, msg
@@ -193,16 +195,16 @@ func validateField(value map[string]interface{}) string {
 	if value[utils.FIRST_NAME] == nil {
 		msg = utils.FIRST_NAME_IS_FIELD_REQUIRED
 	}
-	if value[utils.FIRST_SUR_NAME] == utils.EMPTY {
+	if value[utils.FIRST_SUR_NAME] == nil {
 		msg = utils.FIRST_SUR_NAME_IS_FIELD_REQUIRED
 	}
-	if value[utils.ADDRESS] == utils.EMPTY {
+	if value[utils.ADDRESS] == nil {
 		msg = utils.ADDRESS_IS_FIELD_REQUIRED
 	}
-	if value[utils.PHONE] == utils.EMPTY {
+	if value[utils.PHONE] == nil {
 		msg = utils.PHONE_IS_FIELD_REQUIRED
 	}
-	if value[utils.ZIP_CODE] == utils.EMPTY {
+	if value[utils.ZIP_CODE] == nil {
 		msg = utils.ZIP_CODE_IS_FIELD_REQUIRED
 	}
 	if value[utils.STATE_ID] == nil {

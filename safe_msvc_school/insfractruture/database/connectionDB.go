@@ -3,7 +3,6 @@ package database
 import (
 	"fmt"
 	"log"
-	"os"
 
 	"github.com/joho/godotenv"
 	"github.com/safe_msvc_user/insfractruture/entities"
@@ -51,7 +50,7 @@ func CreateDatabase() string {
 		if err != nil {
 			log.Println(err.Error())
 		}
-		log.Printf("Base de datos '%s' creada exitosamente.\n", os.Getenv("DB_NAME"))
+		log.Printf("Base de datos '%s' creada exitosamente.\n", DB_NAME)
 	}
 	return strConnection
 }

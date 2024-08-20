@@ -13,6 +13,7 @@ const (
 	MSVC_STATES_BY_CITY_URL    string = "http://localhost:3004/api/states/city"
 	MSVC_USER_URL              string = "http://localhost:3005/api/user"
 	MSVC_SCHOOL_URL            string = "http://localhost:3006/api/school"
+	MSVC_COURSE_URL            string = "http://localhost:3007/api/course"
 )
 
 const (

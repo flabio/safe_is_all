@@ -13,7 +13,7 @@ var (
 func NewUserRouter(app *fiber.App) {
 
 	api := app.Group("/api/user")
-	api.Use(middleware.GetToken)
+	api.Use(middleware.ValidateToken)
 	api.Get("/", func(c *fiber.Ctx) error {
 		return handlerUser.GetUserFindAll(c)
 	})

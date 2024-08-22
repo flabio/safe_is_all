@@ -175,7 +175,7 @@ func MapToStruct(m map[string]interface{}, result interface{}) error {
 	v := reflect.ValueOf(result).Elem()
 
 	for key, value := range m {
-		log.Println(key)
+		
 		field := v.FieldByName(key)
 		if !field.IsValid() {
 			continue

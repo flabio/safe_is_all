@@ -5,9 +5,13 @@ meta {
 }
 
 get {
-  url: http://localhost:3002/api/emergencycontact/1
+  url: {{path}}/emergency/
   body: json
-  auth: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
 }
 
 body:json {

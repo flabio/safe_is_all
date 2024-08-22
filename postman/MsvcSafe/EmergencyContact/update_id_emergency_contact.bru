@@ -1,0 +1,26 @@
+meta {
+  name: update_id_emergency_contact
+  type: http
+  seq: 5
+}
+
+put {
+  url: {{path}}/emergency/1
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+   {
+      "first_name": "Juan Sebastian",
+      "last_name": "Cortes Hinestroza",
+      "phone": "42523523",
+      "user_id": 12,
+      "parentesco_id": 1,
+      "active": true
+   }
+}

@@ -62,6 +62,26 @@ func (s *emergencyService) GetEmergencyContactFindById(c *fiber.Ctx) error {
 	})
 }
 
+func (s *emergencyService) GetEmergencyContactFindByIdUser(c *fiber.Ctx) error {
+	id, _ := strconv.Atoi(c.Params(utils.ID))
+	result, err := s.emergencyRepository.GetEmergencyContactFindByIdUser(uint(id))
+	if result.Id == 0 {
+		return c.Status(http.StatusNotFound).JSON(fiber.Map{
+			utils.STATUS:  http.StatusNotFound,
+			utils.MESSAGE: utils.ID_NO_EXIST,
+		})
+	}
+	if err != nil {
+		c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			utils.STATUS:  fiber.StatusBadRequest,
+			utils.MESSAGE: utils.ERROR_QUERY,
+		})
+	}
+	return c.Status(http.StatusOK).JSON(fiber.Map{
+		utils.STATUS: http.StatusOK,
+		utils.DATA:   result,
+	})
+}
 func (s *emergencyService) CreateEmergencyContact(c *fiber.Ctx) error {
 	var emergencyContactCreate entities.EmergencyContact
 

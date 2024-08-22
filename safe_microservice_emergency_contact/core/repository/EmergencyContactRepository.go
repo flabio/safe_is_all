@@ -39,6 +39,14 @@ func (db *OpenConnection) GetEmergencyContactFindById(id uint) (entities.Emergen
 	defer database.Closedb()
 	return emergencyContact, result.Error
 }
+func (db *OpenConnection) GetEmergencyContactFindByIdUser(id uint) (entities.EmergencyContact, error) {
+	var emergencyContact entities.EmergencyContact
+	db.mux.Lock()
+	result := db.connection.Where(utils.DB_EQUAL_USER_ID, id).Find(&emergencyContact)
+	defer db.mux.Unlock()
+	defer database.Closedb()
+	return emergencyContact, result.Error
+}
 func (db *OpenConnection) CreateEmergencyContact(emergency entities.EmergencyContact) (entities.EmergencyContact, error) {
 	db.mux.Lock()
 	err := db.connection.Create(&emergency).Error

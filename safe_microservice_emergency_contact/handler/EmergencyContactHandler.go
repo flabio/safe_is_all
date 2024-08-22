@@ -22,6 +22,9 @@ func (h *emergencyContactHandler) GetEmergencyContactFindAll(c *fiber.Ctx) error
 func (h *emergencyContactHandler) GetEmergencyContactFindById(c *fiber.Ctx) error {
 	return h.emergency.GetEmergencyContactFindById(c)
 }
+func (h *emergencyContactHandler) GetEmergencyContactFindByIdUser(c *fiber.Ctx) error {
+	return h.emergency.GetEmergencyContactFindByIdUser(c)
+}
 func (h *emergencyContactHandler) CreateEmergencyContact(c *fiber.Ctx) error {
 	return h.emergency.CreateEmergencyContact(c)
 }

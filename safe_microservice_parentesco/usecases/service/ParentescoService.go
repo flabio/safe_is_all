@@ -2,7 +2,6 @@ package service
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 	"strconv"
 
@@ -14,7 +13,6 @@ import (
 	"github.com/all_is_safe/infrastructure/utils"
 	"github.com/all_is_safe/usecases/dto"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gookit/validate"
 	"github.com/ulule/deepcopier"
 )
 
@@ -161,15 +159,18 @@ func validateParentesco(id uint, s *parentescoService, c *fiber.Ctx) (dto.Parent
 	if errJson != nil {
 		msg = errJson.Error()
 	}
-
-	helpers.MapToStruct(dataMap, &parentescoDto)
-
-	v := validate.Struct(parentescoDto)
-	if !v.Validate() {
-		msg = v.Errors.Error()
+	msgValid := helpers.ValidateField(dataMap)
+	if msgValid != utils.EMPTY {
+		return dto.ParentescoDTO{}, msgValid
 	}
+
+	helpers.MapToStruct(&parentescoDto, dataMap)
+	msgReq := helpers.ValidateRequired(parentescoDto)
+	if msgReq != utils.EMPTY {
+		return dto.ParentescoDTO{}, msgReq
+	}
+
 	existName, _ := s.parentescoRepository.IsDuplicateParentescoName(id, parentescoDto.Name)
-	log.Println(existName)
 	if existName {
 		msg = utils.NAME_ALREADY_EXIST
 	}

@@ -3,6 +3,7 @@ package routers
 import (
 	"github.com/all_is_safe/globalinterfaces"
 	"github.com/all_is_safe/handler"
+	"github.com/all_is_safe/infrastructure/middleware"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -15,7 +16,7 @@ func NewParentescoRouter(app *fiber.App) {
 	//app.Use(middleware.Logger())
 
 	api := app.Group("/api/parentesco")
-
+	api.Use(middleware.ValidationToken)
 	api.Get("/", parentescoHandler.GetParentescoFindAll)
 	api.Get("/:id", parentescoHandler.GetParentescoFindById)
 	api.Post("/", parentescoHandler.CreateParentesco)

@@ -1,23 +1,15 @@
 package helpers
 
 import (
-	"reflect"
+	"github.com/all_is_safe/infrastructure/utils"
+	"github.com/all_is_safe/usecases/dto"
 )
 
-func MapToStruct(m map[string]interface{}, result interface{}) error {
-	v := reflect.ValueOf(result).Elem()
-
-	for key, value := range m {
-		field := v.FieldByName(key)
-		if !field.IsValid() {
-			continue
-		}
-		fieldType := field.Type()
-		val := reflect.ValueOf(value)
-
-		if val.Type().ConvertibleTo(fieldType) {
-			field.Set(val.Convert(fieldType))
-		}
+func MapToStruct(parentDto *dto.ParentescoDTO, dataMap map[string]interface{}) {
+	parent := dto.ParentescoDTO{
+		Id:     0,
+		Name:   dataMap[utils.NAME].(string),
+		Active: dataMap[utils.ACTIVE].(bool),
 	}
-	return nil
+	*parentDto = parent
 }

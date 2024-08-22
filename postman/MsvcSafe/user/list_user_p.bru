@@ -1,0 +1,19 @@
+meta {
+  name: list_user_p
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{path}}/user
+  body: json
+  auth: bearer
+}
+
+headers {
+  Authorization: bearwr  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZsYWJpb2hzQGdtYWlsLmNvbSIsImV4cCI6MTcyNDI5Nzk0OCwiZnVsbF9uYW1lIjoiRmxhYmlvIEhpbmVzdHJvemEiLCJpZCI6Nn0.cIztR0xbDcNcjZlRoo_ZBUN50crLfxDY-l5nN7e2cXk
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZsYWJpb2hzQGdtYWlsLmNvbSIsImV4cCI6MTcyNDI5Nzk0OCwiZnVsbF9uYW1lIjoiRmxhYmlvIEhpbmVzdHJvemEiLCJpZCI6Nn0.cIztR0xbDcNcjZlRoo_ZBUN50crLfxDY-l5nN7e2cXk
+}

@@ -18,6 +18,6 @@ const (
 )
 
 const (
-	ID_NO_EXIST        = "The id not exists"
+	ID_NO_EXIST        = "The id rol not exists"
 	NAME_ALREADY_EXIST = "name already exists"
 )

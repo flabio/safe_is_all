@@ -3,6 +3,7 @@ package routers
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/safe_msvc_user/handler"
+	"github.com/safe_msvc_user/middleware"
 )
 
 var (
@@ -10,7 +11,9 @@ var (
 )
 
 func NewUserRouter(app *fiber.App) {
+
 	api := app.Group("/api/user")
+	api.Use(middleware.GetToken)
 	api.Get("/", func(c *fiber.Ctx) error {
 		return handlerUser.GetUserFindAll(c)
 	})

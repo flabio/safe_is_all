@@ -11,6 +11,7 @@ import (
 
 // Handler for the  service
 func MsvcUser(c *fiber.Ctx) error {
+
 	id := c.Params(utils.ID)
 	url := utils.MSVC_USER_URL
 
@@ -22,7 +23,7 @@ func MsvcUser(c *fiber.Ctx) error {
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).SendString(utils.FAILED_CREATE)
 	}
-
+	req.Header.Set("Authorization", c.Get("Authorization"))
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
@@ -30,5 +31,6 @@ func MsvcUser(c *fiber.Ctx) error {
 	}
 	defer resp.Body.Close()
 	respBody, err := ioutil.ReadAll(resp.Body)
+
 	return c.Send(respBody)
 }

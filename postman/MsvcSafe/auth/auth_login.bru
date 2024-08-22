@@ -1,0 +1,21 @@
+meta {
+  name: auth_login
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{path}}/auth
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "username":"sdggsds@gmail.com",
+    "password":"12345678"
+  }
+  
+  
+  
+}

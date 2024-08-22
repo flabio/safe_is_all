@@ -6,6 +6,8 @@ import (
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/safe_msvc_user/clients/rol"
+	"github.com/safe_msvc_user/clients/statesstruct"
 	"github.com/safe_msvc_user/core"
 	"github.com/safe_msvc_user/insfractruture/entities"
 	"github.com/safe_msvc_user/insfractruture/ui/global"
@@ -24,6 +26,7 @@ func NewUserService() global.UIUserGlobal {
 }
 
 func (s *userService) GetUserFindAll(c *fiber.Ctx) error {
+	var userDto []dto.UserResponseDTO
 	results, err := s.uiUser.GetUserFindAll()
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
@@ -31,9 +34,25 @@ func (s *userService) GetUserFindAll(c *fiber.Ctx) error {
 			utils.DATA:   utils.ERROR_QUERY,
 		})
 	}
+	for _, item := range results {
+		var userDtoItem dto.UserResponseDTO
+		dataRol, _ := rol.MsvcRolFindById(item.RolId)
+		dataState, _ := statesstruct.MsvcStateFindById(item.StateId)
+
+		if dataRol.Name == "" {
+			userDtoItem.RolName = "Not Rol"
+		} else {
+			userDtoItem.RolName = dataRol.Name
+		}
+		userDtoItem.StateName = dataState.Name
+
+		deepcopier.Copy(&item).To(&userDtoItem)
+		userDto = append(userDto, userDtoItem)
+	}
+
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		utils.STATUS: fiber.StatusOK,
-		utils.DATA:   results,
+		utils.DATA:   userDto,
 	})
 }
 
@@ -57,6 +76,7 @@ func (s *userService) GetUserFindById(c *fiber.Ctx) error {
 		utils.DATA:   result,
 	})
 }
+
 func (s *userService) CreateUser(c *fiber.Ctx) error {
 	var userCreate entities.User
 
@@ -68,6 +88,15 @@ func (s *userService) CreateUser(c *fiber.Ctx) error {
 		})
 	}
 	deepcopier.Copy(userDto).To(&userCreate)
+	dataRol, _ := rol.MsvcRolFindById(userDto.RolId)
+
+	if dataRol.Id == 0 {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+			utils.STATUS:  http.StatusBadRequest,
+			utils.MESSAGE: utils.ROL_NOT_FOUND,
+		})
+	}
+	userCreate.Password = utils.HashAndSalt([]byte(userCreate.Password))
 	result, err := s.uiUser.CreateUser(userCreate)
 	if err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
@@ -168,7 +197,7 @@ func validateUser(id uint, s *userService, c *fiber.Ctx) (dto.UserDTO, string) {
 	if msgRequired != utils.EMPTY {
 		return dto.UserDTO{}, msgRequired
 	}
-	existEmail, _ := s.uiUser.GetUserFindByEmail(id, userDto.Email)
+	existEmail, _ := s.uiUser.GetUserFindByEmailAndId(id, userDto.Email)
 
 	if existEmail {
 		msg = utils.EMAIL_ALREADY_EXIST

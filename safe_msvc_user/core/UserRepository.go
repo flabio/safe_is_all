@@ -7,7 +7,6 @@ import (
 	"github.com/safe_msvc_user/insfractruture/entities"
 	"github.com/safe_msvc_user/insfractruture/ui/uicore"
 	"github.com/safe_msvc_user/insfractruture/utils"
-	"github.com/safe_msvc_user/usecase/dto"
 )
 
 func NewUserRepository() uicore.UIUserCore {
@@ -23,10 +22,10 @@ func NewUserRepository() uicore.UIUserCore {
 	return _OPEN
 }
 
-func (c *OpenConnection) GetUserFindAll() ([]dto.UserResponseDTO, error) {
-	var userEntities []dto.UserResponseDTO
+func (c *OpenConnection) GetUserFindAll() ([]entities.User, error) {
+	var userEntities []entities.User
 	c.mux.Lock()
-	result := c.connection.Table("users").Order(utils.DB_ORDER_DESC).Find(&userEntities)
+	result := c.connection.Order(utils.DB_ORDER_DESC).Find(&userEntities)
 	defer database.CloseConnection()
 	defer c.mux.Unlock()
 	return userEntities, result.Error
@@ -39,7 +38,8 @@ func (c *OpenConnection) GetUserFindById(id uint) (entities.User, error) {
 	defer c.mux.Unlock()
 	return user, result.Error
 }
-func (db *OpenConnection) GetUserFindByEmail(id uint, email string) (bool, error) {
+
+func (db *OpenConnection) GetUserFindByEmailAndId(id uint, email string) (bool, error) {
 
 	db.mux.Lock()
 	query := db.connection.Where(utils.DB_EQUAL_EMAIL_ID, email)

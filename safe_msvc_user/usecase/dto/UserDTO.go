@@ -25,4 +25,11 @@ type UserResponseDTO struct {
 	ZipCode      string `json:"zip_code"`
 	StateId      uint   `json:"state_id"`
 	RolId        uint   `json:"rol_id"`
+	RolName      string `json:"rol_name"`
+	StateName    string `json:"state_name"`
+}
+
+type LoginDTO struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
 }

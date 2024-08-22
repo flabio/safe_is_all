@@ -5,8 +5,11 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/safe/auth"
 	"github.com/safe/course"
 	"github.com/safe/emergencycontact"
+	"github.com/safe/handlers"
+	"github.com/safe/middleware"
 	"github.com/safe/parentesco"
 	"github.com/safe/rol"
 	"github.com/safe/school"
@@ -25,7 +28,13 @@ func main() {
 		ExposeHeaders:    "Content-Length",
 		AllowCredentials: true, // Allow credentials
 	}))
+	// Ruta para el login
+	app.Post("/login", handlers.Login)
+
+	// Grupo de rutas protegidas
+	app.Use("/api", middleware.Protected())
 	//router
+	auth.NewAuthRouter(app)
 	rol.NewRolRouter(app)
 	parentesco.NewParentescoRouter(app)
 	emergencycontact.NewEmergencyContactRouter(app)

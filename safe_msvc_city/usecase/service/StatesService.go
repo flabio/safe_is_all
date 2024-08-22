@@ -55,10 +55,7 @@ func (s *statesService) GetStatesFindById(c *fiber.Ctx) error {
 			utils.STATUS: fiber.StatusNotFound,
 		})
 	}
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		utils.STATUS: fiber.StatusOK,
-		utils.DATA:   result,
-	})
+	return c.Status(http.StatusOK).JSON(result)
 }
 func (s *statesService) GetStatesFindByIdOfCity(c *fiber.Ctx) error {
 	id, _ := strconv.Atoi(c.Params(utils.ID))

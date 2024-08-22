@@ -1,21 +1,22 @@
 package utils
 
 const (
-	ID                    = "id"
-	MESSAGE               = "message"
-	STATUS                = "status"
-	DATA                  = "data"
-	USER                  = "user"
-	CREATED               = "was successfully created"
-	UPDATED               = "was updated successfully"
-	REMOVED               = "was successfully removed"
-	ERROR_QUERY           = "error query, please try again later"
-	ERROR_CREATE          = "error creating"
-	ERROR_PARSING_BODY    = "error parsing body"
-	ERROR_UPDATE          = "error updating"
-	ERROR_DELETE          = "error deleting"
-	ERROR_REQUIRED_FIELDS = " is required."
-	EMPTY                 = ""
+	ID                           = "id"
+	MESSAGE                      = "message"
+	STATUS                       = "status"
+	DATA                         = "data"
+	USER                         = "user"
+	CREATED                      = "was successfully created"
+	UPDATED                      = "was updated successfully"
+	REMOVED                      = "was successfully removed"
+	ERROR_QUERY                  = "error query, please try again later"
+	ERROR_CREATE                 = "error creating"
+	ERROR_PARSING_BODY           = "error parsing body"
+	ERROR_UPDATE                 = "error updating"
+	ERROR_DELETE                 = "error deleting"
+	ERROR_REQUIRED_FIELDS        = " is required."
+	EMPTY                        = ""
+	USER_NOT_FOUND        string = "username o password incorrect."
 )
 const (
 	DB_DIFF_ID        = "id <>?"
@@ -26,9 +27,10 @@ const (
 )
 
 const (
-	ID_NO_EXIST         = "The id not exists"
-	NAME_ALREADY_EXIST  = "Name already exists"
-	EMAIL_ALREADY_EXIST = "Email already exists"
+	ID_NO_EXIST                = "The id not exists"
+	NAME_ALREADY_EXIST         = "Name already exists"
+	EMAIL_ALREADY_EXIST        = "Email already exists"
+	ROL_NOT_FOUND       string = "Rol not found"
 )
 const (
 	FIRST_NAME      = "first_name"
@@ -76,4 +78,23 @@ const (
 	PASSWORD_IS_REQUIRED        = "The password is required."
 	EMAIL_IS_INVALID            = "The email is invalid."
 	PASSWORD_IS_INVALID_LENGTH  = "The password must have a minimum length of 8 characters."
+)
+
+const (
+	MSVC_ROL_URL               string = "http://localhost:3001/api/rol"
+	MSVC_EMERGENCY_CONTACT_URL string = "http://localhost:3003/api/emergency"
+	MSVC_STATES_URL            string = "http://localhost:3004/api/states"
+	MSVC_SCHOOL_URL            string = "http://localhost:3006/api/school"
+	MSVC_COURSE_URL            string = "http://localhost:3007/api/course"
+)
+const (
+	GET           string = "GET"
+	POST          string = "POST"
+	PUT           string = "PUT"
+	DELETE        string = "DELETE"
+	AUTHORIZATION string = "Authorization"
+	BEARER        string = "Bearer "
+)
+const (
+	TOKEN_INVALID string = "Token not provided or invalid"
 )

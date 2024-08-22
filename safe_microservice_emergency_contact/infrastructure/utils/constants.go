@@ -32,3 +32,28 @@ const (
 	BEARER        string = "Bearer "
 	TOKEN_INVALID string = "Token not provided or invalid"
 )
+const (
+	FIRST_NAME    string = "first_name"
+	LAST_NAME     string = "last_name"
+	PHONE         string = "phone"
+	USER_ID       string = "user_id"
+	PARENTESCO_ID string = "parentesco_id"
+	ACTIVE        string = "active"
+)
+const (
+	EMPTY                                  = ""
+	FIRST_NAME_FIELD_IS_REQUIRED    string = "The first name field is required"
+	LAST_NAME_FIELD_IS_REQUIRED     string = "The last name field is required"
+	PHONE_FIELD_IS_REQUIRED         string = "The phone field is required"
+	USER_ID_FIELD_IS_REQUIRED       string = "The user id field is required"
+	PARENTESCO_ID_FIELD_IS_REQUIRED string = "The parentesco id field is required"
+	ACTIVE_FIELD_IS_REQUIRED        string = "The active field is required"
+)
+const (
+	FIRST_NAME_IS_REQUIRED    string = "The first name is required"
+	LAST_NAME_IS_REQUIRED     string = "The last name is required"
+	PHONE_IS_REQUIRED         string = "The phone is required"
+	USER_ID_IS_REQUIRED       string = "The user ID is required"
+	PARENTESCO_ID_IS_REQUIRED string = "The parentest is required"
+	ACTIVE_IS_REQUIRED        string = "The active is required"
+)

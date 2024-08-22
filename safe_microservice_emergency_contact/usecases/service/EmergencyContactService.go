@@ -13,7 +13,7 @@ import (
 	"github.com/all_is_safe/infrastructure/utils"
 	"github.com/all_is_safe/usecases/dto"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gookit/validate"
+
 	"github.com/ulule/deepcopier"
 )
 
@@ -175,10 +175,16 @@ func validateEmergencyContact(c *fiber.Ctx) (dto.EmergencyContactoDTO, string) {
 	if errJson != nil {
 		msg = errJson.Error()
 	}
-	helpers.MapToStruct(dataMap, &emergencyContactDto)
-	v := validate.Struct(emergencyContactDto)
-	if !v.Validate() {
-		msg = v.Errors.Error()
+	msgValid := helpers.ValidateField(dataMap)
+	if msgValid != utils.EMPTY {
+		return dto.EmergencyContactoDTO{}, msgValid
+	}
+
+	helpers.MapToStructContact(&emergencyContactDto, dataMap)
+
+	msgReq := helpers.ValidateRequired(emergencyContactDto)
+	if msgReq != utils.EMPTY {
+		return dto.EmergencyContactoDTO{}, msgReq
 	}
 	return emergencyContactDto, msg
 }

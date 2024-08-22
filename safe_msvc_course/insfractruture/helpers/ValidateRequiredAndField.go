@@ -1,8 +1,6 @@
 package helpers
 
 import (
-	"log"
-
 	"github.com/safe_msvc_course/insfractruture/utils"
 	"github.com/safe_msvc_course/usecase/dto"
 )
@@ -12,7 +10,6 @@ func ValidateRequired(course dto.CourseDTO) string {
 	if course.Name == utils.EMPTY {
 		msg = utils.NAME_IS_REQUIRED
 	}
-	log.Println(course.SchoolId)
 	if course.SchoolId == 0 {
 		msg = utils.SCHOOL_ID_IS_REQUIRED
 	}

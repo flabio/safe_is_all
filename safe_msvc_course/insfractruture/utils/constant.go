@@ -43,3 +43,9 @@ const (
 	NAME_IS_REQUIRED      = "The name is required."
 	SCHOOL_ID_IS_REQUIRED = "The id school is required."
 )
+
+const (
+	AUTHORIZATION string = "Authorization"
+	BEARER        string = "Bearer "
+	TOKEN_INVALID string = "Token not provided or invalid"
+)

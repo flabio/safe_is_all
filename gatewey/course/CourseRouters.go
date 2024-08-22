@@ -1,8 +1,15 @@
 package course
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"github.com/gofiber/fiber/v2"
+	"github.com/safe/middleware"
+)
 
 func NewCourseRouter(app *fiber.App) {
+	app.Use(middleware.LoggingMiddleware)
+	app.Use(middleware.AuthMiddleware)
+
+	app.Use("/course", middleware.Protected())
 	app.Get("/course/", func(c *fiber.Ctx) error {
 		return MsvcCourse(c)
 	})

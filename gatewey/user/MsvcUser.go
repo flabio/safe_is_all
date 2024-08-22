@@ -23,7 +23,7 @@ func MsvcUser(c *fiber.Ctx) error {
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).SendString(utils.FAILED_CREATE)
 	}
-	req.Header.Set("Authorization", c.Get("Authorization"))
+	req.Header.Set(utils.AUTHORIZATION, c.Get(utils.AUTHORIZATION))
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {

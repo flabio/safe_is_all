@@ -27,10 +27,11 @@ const (
 )
 
 const (
-	ID_NO_EXIST                = "The id not exists"
-	NAME_ALREADY_EXIST         = "Name already exists"
-	EMAIL_ALREADY_EXIST        = "Email already exists"
+	ID_NO_EXIST         string = "The id not exists"
+	NAME_ALREADY_EXIST  string = "Name already exists"
+	EMAIL_ALREADY_EXIST string = "Email already exists"
 	ROL_NOT_FOUND       string = "Rol not found"
+	STATE_NOT_FOUND     string = "State not found"
 )
 const (
 	FIRST_NAME      = "first_name"

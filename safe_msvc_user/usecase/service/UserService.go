@@ -96,6 +96,13 @@ func (s *userService) CreateUser(c *fiber.Ctx) error {
 			utils.MESSAGE: utils.ROL_NOT_FOUND,
 		})
 	}
+	dataState, _ := statesstruct.MsvcStateFindById(userDto.StateId)
+	if dataState.Id == 0 {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+			utils.STATUS:  http.StatusBadRequest,
+			utils.MESSAGE: utils.STATE_NOT_FOUND,
+		})
+	}
 	userCreate.Password = utils.HashAndSalt([]byte(userCreate.Password))
 	result, err := s.uiUser.CreateUser(userCreate)
 	if err != nil {
@@ -127,6 +134,21 @@ func (s *userService) UpdateUser(c *fiber.Ctx) error {
 		})
 	}
 	deepcopier.Copy(result).To(&updatedUser)
+	dataRol, _ := rol.MsvcRolFindById(result.RolId)
+
+	if dataRol.Id == 0 {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+			utils.STATUS:  http.StatusBadRequest,
+			utils.MESSAGE: utils.ROL_NOT_FOUND,
+		})
+	}
+	dataState, _ := statesstruct.MsvcStateFindById(result.StateId)
+	if dataState.Id == 0 {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+			utils.STATUS:  http.StatusBadRequest,
+			utils.MESSAGE: utils.STATE_NOT_FOUND,
+		})
+	}
 	userDto, msgError := validateUser(uint(id), s, c)
 	if msgError != utils.EMPTY {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{

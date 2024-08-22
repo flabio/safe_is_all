@@ -28,7 +28,6 @@ func jwtError(c *fiber.Ctx, err error) error {
 // AuthMiddleware checks if the request is authenticated
 func AuthMiddleware(c *fiber.Ctx) error {
 	token := c.Get(utils.AUTHORIZATION)
-
 	if len(token) > 7 && token[:7] == utils.BEARER {
 		return c.Next()
 

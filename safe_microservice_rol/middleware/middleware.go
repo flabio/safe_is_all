@@ -7,7 +7,9 @@ import (
 
 func ValidateToken(c *fiber.Ctx) error {
 	// Validate JWT token here
+
 	token := c.Get(utils.AUTHORIZATION)
+
 	if len(token) > 7 && token[:7] == utils.BEARER {
 		return c.Next()
 	}

@@ -3,10 +3,10 @@ package core
 import (
 	"sync"
 
+	utils "github.com/flabio/safe_constants"
 	"github.com/safe_msvc_city/insfratructure/database"
 	"github.com/safe_msvc_city/insfratructure/entities"
 	"github.com/safe_msvc_city/insfratructure/ui/uicore"
-	"github.com/safe_msvc_city/insfratructure/utils"
 )
 
 func GetCityInstance() uicore.UICityCore {
@@ -33,7 +33,7 @@ func (db *OpenConnection) GetCityFindAll() ([]entities.City, error) {
 func (db *OpenConnection) GetCityFindById(id uint) (entities.City, error) {
 	var city entities.City
 	db.mux.Lock()
-	result := db.connection.Where(utils.DB_EQUAL_ID,id).Find(&city)
+	result := db.connection.Where(utils.DB_EQUAL_ID, id).Find(&city)
 	defer db.mux.Unlock()
 	defer database.CloseConnection()
 	return city, result.Error
@@ -64,7 +64,7 @@ func (db *OpenConnection) DeleteCity(id uint) (bool, error) {
 func (db *OpenConnection) GetCityFindByName(id uint, name string) (bool, error) {
 	db.mux.Lock()
 	var city entities.City
-	query := db.connection.Where(utils.DB_NAME, name)
+	query := db.connection.Where(utils.DB_EQUAL_NAME, name)
 	if id > 0 {
 		query = query.Where(utils.DB_DIFF_ID, id)
 	}
@@ -77,7 +77,7 @@ func (db *OpenConnection) GetCityFindByName(id uint, name string) (bool, error) 
 func (db *OpenConnection) GetCityFindByCode(id uint, name string) (bool, error) {
 	db.mux.Lock()
 	var city entities.City
-	query := db.connection.Where(utils.DB_NAME, name)
+	query := db.connection.Where(utils.DB_EQUAL_NAME, name)
 	if id > 0 {
 		query = query.Where(utils.DB_DIFF_ID, id)
 	}

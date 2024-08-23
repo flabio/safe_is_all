@@ -6,12 +6,12 @@ import (
 	"net/http"
 	"strconv"
 
+	utils "github.com/flabio/safe_constants"
 	"github.com/gofiber/fiber/v2"
 	"github.com/safe_msvc_city/core"
 	"github.com/safe_msvc_city/insfratructure/entities"
 	"github.com/safe_msvc_city/insfratructure/ui/global"
 	"github.com/safe_msvc_city/insfratructure/ui/uicore"
-	"github.com/safe_msvc_city/insfratructure/utils"
 	"github.com/safe_msvc_city/usecase/dto"
 	"github.com/ulule/deepcopier"
 )
@@ -59,7 +59,7 @@ func (s *statesService) GetStatesFindById(c *fiber.Ctx) error {
 }
 func (s *statesService) GetStatesFindByIdOfCity(c *fiber.Ctx) error {
 	id, _ := strconv.Atoi(c.Params(utils.ID))
-	log.Println(id)
+
 	result, err := s.states.GetStatesFindByIdOfCity(uint(id))
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{

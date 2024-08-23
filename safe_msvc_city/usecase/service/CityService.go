@@ -9,12 +9,12 @@ import (
 	"github.com/gookit/validate"
 	"github.com/ulule/deepcopier"
 
+	utils "github.com/flabio/safe_constants"
 	"github.com/safe_msvc_city/core"
 	"github.com/safe_msvc_city/insfratructure/entities"
 	"github.com/safe_msvc_city/insfratructure/helpers"
 	"github.com/safe_msvc_city/insfratructure/ui/global"
 	"github.com/safe_msvc_city/insfratructure/ui/uicore"
-	"github.com/safe_msvc_city/insfratructure/utils"
 	"github.com/safe_msvc_city/usecase/dto"
 )
 
@@ -149,7 +149,6 @@ func (s *cityService) DeleteCity(c *fiber.Ctx) error {
 		utils.DATA:    result,
 	})
 }
-
 
 func validateCity(id uint, s *cityService, c *fiber.Ctx) (dto.CityDTO, string) {
 	var cityDto dto.CityDTO

@@ -10,8 +10,8 @@ var (
 )
 
 func NewStatesRouter(app *fiber.App) {
-	city := app.Group("/api/states")
-	city.Get("/", func(c *fiber.Ctx) error {
+	api := app.Group("/api/states")
+	api.Get("/", func(c *fiber.Ctx) error {
 		return hadlerStates.GetStatesFindAll(c)
 	}).Get("/:id", func(c *fiber.Ctx) error {
 		return hadlerStates.GetStatesFindById(c)

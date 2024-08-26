@@ -8,9 +8,9 @@ import (
 	"github.com/safe_msvc_user/core"
 	"github.com/safe_msvc_user/insfractruture/entities"
 
+	utils "github.com/flabio/safe_constants"
 	"github.com/safe_msvc_user/insfractruture/ui/global"
 	"github.com/safe_msvc_user/insfractruture/ui/uicore"
-	"github.com/safe_msvc_user/insfractruture/utils"
 	"github.com/ulule/deepcopier"
 )
 

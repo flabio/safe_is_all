@@ -3,10 +3,10 @@ package core
 import (
 	"sync"
 
+	var_db "github.com/flabio/safe_var_db"
 	"github.com/safe_msvc_user/insfractruture/database"
 	"github.com/safe_msvc_user/insfractruture/entities"
 	"github.com/safe_msvc_user/insfractruture/ui/uicore"
-	"github.com/safe_msvc_user/insfractruture/utils"
 	"github.com/safe_msvc_user/usecase/dto"
 )
 
@@ -26,7 +26,7 @@ func NewSchoolRepository() uicore.UISchoolCore {
 func (c *OpenConnection) GetSchoolFindAll() ([]dto.SchoolResponseDTO, error) {
 	var schoolEntities []dto.SchoolResponseDTO
 	c.mux.Lock()
-	result := c.connection.Table("schools").Order(utils.DB_ORDER_DESC).Find(&schoolEntities)
+	result := c.connection.Table("schools").Order(var_db.DB_ORDER_DESC).Find(&schoolEntities)
 	defer database.CloseConnection()
 	defer c.mux.Unlock()
 	return schoolEntities, result.Error
@@ -34,7 +34,7 @@ func (c *OpenConnection) GetSchoolFindAll() ([]dto.SchoolResponseDTO, error) {
 func (c *OpenConnection) GetSchoolFindById(id uint) (entities.School, error) {
 	var school entities.School
 	c.mux.Lock()
-	result := c.connection.Where(utils.DB_EQUAL_ID, id).Find(&school)
+	result := c.connection.Where(var_db.DB_EQUAL_ID, id).Find(&school)
 	defer database.CloseConnection()
 	defer c.mux.Unlock()
 	return school, result.Error
@@ -42,9 +42,9 @@ func (c *OpenConnection) GetSchoolFindById(id uint) (entities.School, error) {
 func (c *OpenConnection) GetSchoolFindByEmail(id uint, email string) (entities.School, error) {
 	var school entities.School
 	c.mux.Lock()
-	query := c.connection.Where(utils.DB_EQUAL_EMAIL_ID, email)
+	query := c.connection.Where(var_db.DB_EQUAL_EMAIL_ID, email)
 	if id > 0 {
-		query = query.Where(utils.DB_DIFF_ID, id)
+		query = query.Where(var_db.DB_DIFF_ID, id)
 	}
 	query = query.Find(&school)
 
@@ -62,7 +62,7 @@ func (c *OpenConnection) CreateSchool(school entities.School) (entities.School, 
 }
 func (c *OpenConnection) UpdateSchool(id uint, school entities.School) (entities.School, error) {
 	c.mux.Lock()
-	err := c.connection.Where(utils.DB_EQUAL_ID, id).Updates(&school).Error
+	err := c.connection.Where(var_db.DB_EQUAL_ID, id).Updates(&school).Error
 	defer database.CloseConnection()
 	defer c.mux.Unlock()
 	return school, err
@@ -71,7 +71,7 @@ func (c *OpenConnection) UpdateSchool(id uint, school entities.School) (entities
 func (c *OpenConnection) DeleteSchool(id uint) (bool, error) {
 	c.mux.Lock()
 	var school entities.School
-	err := c.connection.Where(utils.DB_EQUAL_ID, id).Delete(&school).Error
+	err := c.connection.Where(var_db.DB_EQUAL_ID, id).Delete(&school).Error
 	defer database.CloseConnection()
 	defer c.mux.Unlock()
 	return err == nil, err

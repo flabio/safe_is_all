@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"log"
 
+	utils "github.com/flabio/safe_constants"
 	"github.com/gofiber/fiber/v2"
 	"github.com/safe_msvc_user/insfractruture/helpers"
-	utils "github.com/flabio/safe_constants"
 	"github.com/safe_msvc_user/usecase/dto"
 )
 
@@ -39,6 +39,10 @@ func ValidateSchool(id uint, s *SchoolService, c *fiber.Ctx) (dto.SchoolDTO, str
 	existEmail, _ := s.UiSchool.GetSchoolFindByEmail(id, schoolDto.Email)
 	if existEmail.Email != utils.EMPTY {
 		msg = utils.EMAIL_ALREADY_EXIST
+	}
+	existProviderNumber, _ := s.UiSchool.GetSchoolFindByProviderNumber(id, schoolDto.ProviderNumber)
+	if existProviderNumber.ProviderNumber != utils.EMPTY {
+		msg = "The Provider number ready exists "
 	}
 	return schoolDto, msg
 }

@@ -8,6 +8,7 @@ type SchoolDTO struct {
 	Address        string `json:"address"`
 	Phone          string `json:"phone"`
 	ZipCode        string `json:"zip_code"`
+	StateId        uint   `json:"state_id"`
 	Active         bool   `json:"active"`
 }
 
@@ -19,5 +20,6 @@ type SchoolResponseDTO struct {
 	Phone          string `json:"phone"`
 	ZipCode        string `json:"zip_code"`
 	ProviderNumber string `json:"provider_number"`
+	StateId        uint   `json:"state_id"`
 	Active         bool   `json:"active"`
 }

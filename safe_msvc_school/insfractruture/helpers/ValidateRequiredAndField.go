@@ -25,6 +25,9 @@ func ValidateRequired(school dto.SchoolDTO) string {
 	if school.ProviderNumber == utils.EMPTY {
 		msg = utils.PROVIDER_NUMBER_IS_REQUIRED
 	}
+	if school.StateId == 0 {
+		msg = utils.STATE_ID_IS_REQUIRED
+	}
 	return msg
 }
 
@@ -47,6 +50,9 @@ func ValidateField(value map[string]interface{}) string {
 	}
 	if value[utils.PROVIDER_NUMBER] == nil {
 		msg = utils.PROVIDER_NUMBER_IS_FIELD_REQUIRED
+	}
+	if value[utils.STATE_ID] == nil {
+		msg = utils.STATE_ID_IS_FIELD_REQUIRED
 	}
 	return msg
 }

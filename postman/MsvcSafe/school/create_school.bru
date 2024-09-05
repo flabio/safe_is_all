@@ -7,15 +7,18 @@ meta {
 post {
   url: {{path}}/school
   body: json
-  auth: none
+  auth: bearer
 }
 
 body:json {
-  {
-    "name":"tets",
-    "phone":"453643643",
-    "address":"calle 34",
-    "email":"udemy@gmail.com",
-    "active":true
-  }
+   {
+        "id": 7,
+        "name": "tets",
+        "email": "udemy@gmail.com",
+        "address": "calle 34",
+        "phone": "453643643",
+        "zip_code": "",
+        "provider_number": "",
+        "state_id": 0
+   }
 }

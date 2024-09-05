@@ -10,6 +10,8 @@ require (
 	gorm.io/gorm v1.25.11
 )
 
+require github.com/flabio/safe_constants v1.0.5 // indirect
+
 require (
 	github.com/andybalholm/brotli v1.0.5 // indirect
 	github.com/google/uuid v1.5.0 // indirect

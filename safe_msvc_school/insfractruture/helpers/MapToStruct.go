@@ -6,6 +6,7 @@ import (
 )
 
 func MapToStructSchool(schoolDto *dto.SchoolDTO, dataMap map[string]interface{}) {
+
 	school := dto.SchoolDTO{
 		Name:           dataMap[utils.NAME].(string),
 		Address:        dataMap[utils.ADDRESS].(string),
@@ -16,5 +17,6 @@ func MapToStructSchool(schoolDto *dto.SchoolDTO, dataMap map[string]interface{})
 		ProviderNumber: dataMap[utils.PROVIDER_NUMBER].(string),
 		Active:         dataMap[utils.ACTIVE].(bool),
 	}
+
 	*schoolDto = school
 }

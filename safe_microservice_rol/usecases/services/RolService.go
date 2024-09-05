@@ -4,16 +4,15 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
-	"reflect"
 	"strconv"
 
+	utils "github.com/flabio/safe_constants"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gookit/validate"
+
 	"github.com/msvc_rol/core/interfaces"
 	"github.com/msvc_rol/core/repositories"
 	"github.com/msvc_rol/globalinterfaces"
 	"github.com/msvc_rol/infrastructure/entities"
-	"github.com/msvc_rol/infrastructure/utils"
 	"github.com/msvc_rol/usecases/dto"
 	"github.com/ulule/deepcopier"
 )
@@ -158,12 +157,15 @@ func validateRol(id uint, rolDto dto.RolDTO, rolService *rolService, c *fiber.Ct
 	if errJson != nil {
 		msg = errJson.Error()
 	}
+	msgValid := validateField(dataMap)
+	if msgValid != utils.EMPTY {
+		return dto.RolDTO{}, msgValid
+	}
 
-	MapToStruct(dataMap, &rolDto)
-
-	v := validate.Struct(rolDto)
-	if !v.Validate() {
-		msg = v.Errors.Error()
+	MapToStruct(&rolDto, dataMap)
+	msgRequired := validateRequired(rolDto)
+	if msgRequired != utils.EMPTY {
+		return dto.RolDTO{}, msgRequired
 	}
 	existName, _ := rolService.Irol.GetFindByName(id, rolDto.Name)
 	if existName {
@@ -171,21 +173,29 @@ func validateRol(id uint, rolDto dto.RolDTO, rolService *rolService, c *fiber.Ct
 	}
 	return rolDto, msg
 }
-func MapToStruct(m map[string]interface{}, result interface{}) error {
-	v := reflect.ValueOf(result).Elem()
 
-	for key, value := range m {
-		
-		field := v.FieldByName(key)
-		if !field.IsValid() {
-			continue
-		}
-		fieldType := field.Type()
-		val := reflect.ValueOf(value)
-
-		if val.Type().ConvertibleTo(fieldType) {
-			field.Set(val.Convert(fieldType))
-		}
+func MapToStruct(dataDto *dto.RolDTO, dataMap map[string]interface{}) {
+	rol := dto.RolDTO{
+		Name:   dataMap[utils.NAME].(string),
+		Active: dataMap[utils.ACTIVE].(bool),
 	}
-	return nil
+	*dataDto = rol
+}
+func validateField(value map[string]interface{}) string {
+	var msg string = utils.EMPTY
+	if value[utils.NAME] == nil {
+		msg = utils.NAME_FIELD_IS_REQUIRED
+	}
+	if value[utils.ACTIVE] == nil {
+		msg = utils.ACTIVE_FIELD_IS_REQUIRED
+	}
+	return msg
+}
+
+func validateRequired(field dto.RolDTO) string {
+	var msg string = utils.EMPTY
+	if field.Name == utils.EMPTY {
+		msg = utils.NAME_IS_REQUIRED
+	}
+	return msg
 }

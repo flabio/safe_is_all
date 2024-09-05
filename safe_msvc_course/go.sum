@@ -3,6 +3,16 @@ github.com/andybalholm/brotli v1.0.5/go.mod h1:fO7iG3H7G2nSZ7m0zPUDn85XEX2GTukHG
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/flabio/safe_constants v0.0.0-20240826143739-226438bf7dad h1:fIKDDmoo9viFgXvq+OwRK26OxnDt1MEumXU9ry61ul4=
+github.com/flabio/safe_constants v0.0.0-20240826143739-226438bf7dad/go.mod h1:6Gps5IgSi4RQlnkaKEwqPp7ysJVi9oeWnNNsEbnyUyU=
+github.com/flabio/safe_constants v1.0.2 h1:MlPA7NXPqIoVnqfOgO2mm32dcpq9jXc8kldSAmV3t/Q=
+github.com/flabio/safe_constants v1.0.2/go.mod h1:6Gps5IgSi4RQlnkaKEwqPp7ysJVi9oeWnNNsEbnyUyU=
+github.com/flabio/safe_constants v1.0.3 h1:seiG2jIvNQ6kVTdL3nuvE/2kJSokkMvHCbPoOJbQIWM=
+github.com/flabio/safe_constants v1.0.3/go.mod h1:6Gps5IgSi4RQlnkaKEwqPp7ysJVi9oeWnNNsEbnyUyU=
+github.com/flabio/safe_constants v1.0.4-0.20240828050955-e67afaf86dad h1:W9gzqc+cKLp2hS+2RRlghYhgwjkPS3Cg1CkZtLqUoTs=
+github.com/flabio/safe_constants v1.0.4-0.20240828050955-e67afaf86dad/go.mod h1:6Gps5IgSi4RQlnkaKEwqPp7ysJVi9oeWnNNsEbnyUyU=
+github.com/flabio/safe_constants v1.0.5 h1:/J87EikFhyXoxY980SoQbxRHYfMPr5DhW9/e3PxJSZk=
+github.com/flabio/safe_constants v1.0.5/go.mod h1:6Gps5IgSi4RQlnkaKEwqPp7ysJVi9oeWnNNsEbnyUyU=
 github.com/gofiber/fiber/v2 v2.52.5 h1:tWoP1MJQjGEe4GB5TUGOi7P2E0ZMMRx5ZTG4rT+yGMo=
 github.com/gofiber/fiber/v2 v2.52.5/go.mod h1:KEOE+cXMhXG0zHc9d8+E38hoX+ZN7bhOtgeF2oT6jrQ=
 github.com/google/uuid v1.5.0 h1:1p67kYwdtXjb0gL0BPiP1Av9wiZPo5A8z2cWkTZ+eyU=

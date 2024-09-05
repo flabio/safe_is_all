@@ -44,5 +44,7 @@ func ValidateSchool(id uint, s *SchoolService, c *fiber.Ctx) (dto.SchoolDTO, str
 	if existProviderNumber.ProviderNumber != utils.EMPTY {
 		msg = "The Provider number ready exists "
 	}
+	log.Println("schoolDto")
+	log.Println(schoolDto)
 	return schoolDto, msg
 }

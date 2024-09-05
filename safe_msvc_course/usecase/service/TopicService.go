@@ -1,31 +1,29 @@
 package service
 
 import (
-	"log"
 	"net/http"
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/safe_msvc_user/clients/statesstruct"
-	"github.com/safe_msvc_user/core"
-	"github.com/safe_msvc_user/insfractruture/entities"
+	"github.com/safe_msvc_course/core"
+	"github.com/safe_msvc_course/insfractruture/entities"
+	"github.com/safe_msvc_course/insfractruture/ui/global"
+	"github.com/safe_msvc_course/insfractruture/ui/uicore"
+	"github.com/safe_msvc_course/insfractruture/utils"
 
-	utils "github.com/flabio/safe_constants"
-	"github.com/safe_msvc_user/insfractruture/ui/global"
-	"github.com/safe_msvc_user/insfractruture/ui/uicore"
 	"github.com/ulule/deepcopier"
 )
 
-type SchoolService struct {
-	UiSchool uicore.UISchoolCore
+type TopicService struct {
+	UiTopic uicore.UITopicCore
 }
 
-func NewSchoolService() global.UISchoolGlobal {
-	return &SchoolService{UiSchool: core.NewSchoolRepository()}
+func NewTopicService() global.UITopicGlobal {
+	return &TopicService{UiTopic: core.NewTopicRepository()}
 }
 
-func (s *SchoolService) GetSchoolFindAll(c *fiber.Ctx) error {
-	results, err := s.UiSchool.GetSchoolFindAll()
+func (s *TopicService) GetTopicFindAll(c *fiber.Ctx) error {
+	results, err := s.UiTopic.GetTopicFindAll()
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			utils.STATUS: fiber.StatusBadRequest,
@@ -38,9 +36,9 @@ func (s *SchoolService) GetSchoolFindAll(c *fiber.Ctx) error {
 	})
 }
 
-func (s *SchoolService) GetSchoolFindById(c *fiber.Ctx) error {
+func (s *TopicService) GetTopicFindById(c *fiber.Ctx) error {
 	id, _ := strconv.Atoi(c.Params(utils.ID))
-	result, err := s.UiSchool.GetSchoolFindById(uint(id))
+	result, err := s.UiTopic.GetTopicFindById(uint(id))
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			utils.STATUS: fiber.StatusBadRequest,
@@ -58,30 +56,18 @@ func (s *SchoolService) GetSchoolFindById(c *fiber.Ctx) error {
 		utils.DATA:   result,
 	})
 }
-func (s *SchoolService) CreateSchool(c *fiber.Ctx) error {
-	var schoolCreate entities.School
+func (s *TopicService) CreateTopic(c *fiber.Ctx) error {
+	var courseCreate entities.Topic
 
-	dataDto, msgError := ValidateSchool(0, s, c)
+	dataDto, msgError := ValidateTopic(0, s, c)
 	if msgError != utils.EMPTY {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
 			utils.STATUS:  http.StatusBadRequest,
 			utils.MESSAGE: msgError,
 		})
 	}
-
-	deepcopier.Copy(dataDto).To(&schoolCreate)
-	log.Println(schoolCreate)
-	stateExit, _ := statesstruct.MsvcStateFindById(dataDto.StateId, c)
-	log.Println(stateExit)
-	if stateExit.Id == 0 {
-		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
-			utils.STATUS:  http.StatusBadRequest,
-			utils.MESSAGE: utils.STATE_NOT_FOUND,
-		})
-	}
-	log.Println("create")
-	log.Println(schoolCreate)
-	result, err := s.UiSchool.CreateSchool(schoolCreate)
+	deepcopier.Copy(dataDto).To(&courseCreate)
+	result, err := s.UiTopic.CreateTopic(courseCreate)
 	if err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
 			utils.STATUS:  http.StatusBadRequest,
@@ -95,10 +81,10 @@ func (s *SchoolService) CreateSchool(c *fiber.Ctx) error {
 	})
 }
 
-func (s *SchoolService) UpdateSchool(c *fiber.Ctx) error {
-	var updatedSchool entities.School
+func (s *TopicService) UpdateTopic(c *fiber.Ctx) error {
+	var updatedCourse entities.Topic
 	id, _ := strconv.Atoi(c.Params(utils.ID))
-	result, err := s.UiSchool.GetSchoolFindById(uint(id))
+	result, err := s.UiTopic.GetTopicFindById(uint(id))
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			utils.STATUS: fiber.StatusBadRequest,
@@ -111,23 +97,16 @@ func (s *SchoolService) UpdateSchool(c *fiber.Ctx) error {
 			utils.MESSAGE: utils.ID_NO_EXIST,
 		})
 	}
-	deepcopier.Copy(result).To(&updatedSchool)
-	stateExit, _ := statesstruct.MsvcStateFindById(result.StateId, c)
-	if stateExit.Id == 0 {
-		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
-			utils.STATUS:  http.StatusBadRequest,
-			utils.MESSAGE: utils.STATE_NOT_FOUND,
-		})
-	}
-	schoolDto, msgError := ValidateSchool(uint(id), s, c)
+	deepcopier.Copy(result).To(&updatedCourse)
+	courseDto, msgError := ValidateTopic(uint(id), s, c)
 	if msgError != utils.EMPTY {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
 			utils.STATUS:  http.StatusBadRequest,
 			utils.MESSAGE: msgError,
 		})
 	}
-	deepcopier.Copy(schoolDto).To(&updatedSchool)
-	user, err := s.UiSchool.UpdateSchool(uint(id), updatedSchool)
+	deepcopier.Copy(courseDto).To(&updatedCourse)
+	user, err := s.UiTopic.UpdateTopic(uint(id), updatedCourse)
 	if err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
 			utils.STATUS:  http.StatusBadRequest,
@@ -140,22 +119,22 @@ func (s *SchoolService) UpdateSchool(c *fiber.Ctx) error {
 		utils.DATA:    user,
 	})
 }
-func (s *SchoolService) DeleteSchool(c *fiber.Ctx) error {
+func (s *TopicService) DeleteTopic(c *fiber.Ctx) error {
 	id, _ := strconv.Atoi(c.Params(utils.ID))
-	schoolFindById, err := s.UiSchool.GetSchoolFindById(uint(id))
+	courseFindById, err := s.UiTopic.GetTopicFindById(uint(id))
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			utils.STATUS: fiber.StatusBadRequest,
 			utils.DATA:   utils.ERROR_QUERY,
 		})
 	}
-	if schoolFindById.Id == 0 {
+	if courseFindById.Id == 0 {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
 			utils.STATUS:  fiber.StatusNotFound,
 			utils.MESSAGE: utils.ID_NO_EXIST,
 		})
 	}
-	result, err := s.UiSchool.DeleteSchool(uint(id))
+	result, err := s.UiTopic.DeleteTopic(uint(id))
 	if err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
 			utils.STATUS:  http.StatusBadRequest,

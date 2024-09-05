@@ -3,6 +3,7 @@ package routers
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/safe_msvc_user/handler"
+	"github.com/safe_msvc_user/insfractruture/middleware"
 )
 
 var (
@@ -11,6 +12,7 @@ var (
 
 func NewSchoolRouter(app *fiber.App) {
 	api := app.Group("/api/school")
+	api.Use(middleware.ValidateToken) // Validate token before accessing the routes below
 	api.Get("/", func(c *fiber.Ctx) error {
 		return handlerSchool.GetSchoolFindAll(c)
 	})

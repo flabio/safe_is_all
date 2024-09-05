@@ -6,7 +6,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/safe_msvc_course/insfractruture/helpers"
-	"github.com/safe_msvc_course/insfractruture/utils"
+	utils "github.com/flabio/safe_constants"
 	"github.com/safe_msvc_course/usecase/dto"
 )
 

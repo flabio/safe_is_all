@@ -149,8 +149,7 @@ func (rolService *rolService) Delete(c *fiber.Ctx) error {
 func validateRol(id uint, rolDto dto.RolDTO, rolService *rolService, c *fiber.Ctx) (dto.RolDTO, string) {
 	var msg string = ""
 	b := c.Body()
-	datass := []byte(b)
-	log.Println(datass)
+
 	var dataMap map[string]interface{}
 	errJson := json.Unmarshal([]byte(b), &dataMap)
 

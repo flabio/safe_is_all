@@ -6,13 +6,14 @@ import (
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/gookit/validate"
+
 	"github.com/ulule/deepcopier"
 
 	utils "github.com/flabio/safe_constants"
 	"github.com/safe_msvc_city/core"
 	"github.com/safe_msvc_city/insfratructure/entities"
 	"github.com/safe_msvc_city/insfratructure/helpers"
+
 	"github.com/safe_msvc_city/insfratructure/ui/global"
 	"github.com/safe_msvc_city/insfratructure/ui/uicore"
 	"github.com/safe_msvc_city/usecase/dto"
@@ -83,6 +84,7 @@ func (s *cityService) CreateCity(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
 		utils.STATUS: http.StatusCreated,
 		utils.DATA:   result,
+		utils.MESSAGE: utils.CREATED,
 	})
 }
 
@@ -119,6 +121,7 @@ func (s *cityService) UpdateCity(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusAccepted).JSON(fiber.Map{
 		utils.STATUS: http.StatusAccepted,
 		utils.DATA:   result,
+		utils.MESSAGE: utils.UPDATED,
 	})
 }
 func (s *cityService) DeleteCity(c *fiber.Ctx) error {
@@ -153,16 +156,23 @@ func (s *cityService) DeleteCity(c *fiber.Ctx) error {
 func validateCity(id uint, s *cityService, c *fiber.Ctx) (dto.CityDTO, string) {
 	var cityDto dto.CityDTO
 	var msg string = ""
-	body := c.Body()
+	b := c.Body()
+
 	var dataMap map[string]interface{}
-	errJson := json.Unmarshal([]byte(body), &dataMap)
+	errJson := json.Unmarshal([]byte(b), &dataMap)
+
 	if errJson != nil {
 		msg = errJson.Error()
 	}
-	helpers.MapToStruct(dataMap, &cityDto)
-	v := validate.Struct(cityDto)
-	if !v.Validate() {
-		msg = v.Errors.Error()
+	msgValid := helpers.ValidateFieldCity(dataMap)
+	if msgValid != utils.EMPTY {
+		return dto.CityDTO{}, msgValid
+	}
+
+	helpers.MapToStruct(&cityDto, dataMap)
+	msgRequired := helpers.ValidateRequiredCity(cityDto)
+	if msgRequired != utils.EMPTY {
+		return dto.CityDTO{}, msgRequired
 	}
 	existName, _ := s.cityRepository.GetCityFindByName(id, cityDto.Name)
 	if existName {
@@ -170,3 +180,4 @@ func validateCity(id uint, s *cityService, c *fiber.Ctx) (dto.CityDTO, string) {
 	}
 	return cityDto, msg
 }
+

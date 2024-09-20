@@ -1,24 +1,33 @@
 package helpers
 
 import (
-	"log"
-	"reflect"
+	utils "github.com/flabio/safe_constants"
+	"github.com/safe_msvc_city/usecase/dto"
 )
 
-func MapToStruct(m map[string]interface{}, result interface{}) error {
-	v := reflect.ValueOf(result).Elem()
-	for key, value := range m {
-		field := v.FieldByName(key)
-		log.Println(field)
-		if !field.IsValid() {
-			continue
-		}
-		fieldType := field.Type()
-		val := reflect.ValueOf(value)
-
-		if val.Type().ConvertibleTo(fieldType) {
-			field.Set(val.Convert(fieldType))
-		}
+func MapToStruct(dataDto *dto.CityDTO, dataMap map[string]interface{}) {
+	city := dto.CityDTO{
+		Name:   dataMap[utils.NAME].(string),
+		Active: dataMap[utils.ACTIVE].(bool),
 	}
-	return nil
+	*dataDto = city
+}
+
+func ValidateFieldCity(value map[string]interface{}) string {
+	var msg string = utils.EMPTY
+	if value[utils.NAME] == nil {
+		msg = utils.NAME_FIELD_IS_REQUIRED
+	}
+	if value[utils.ACTIVE] == nil {
+		msg = utils.ACTIVE_FIELD_IS_REQUIRED
+	}
+	return msg
+}
+
+func ValidateRequiredCity(field dto.CityDTO) string {
+	var msg string = utils.EMPTY
+	if field.Name == utils.EMPTY {
+		msg = utils.NAME_IS_REQUIRED
+	}
+	return msg
 }

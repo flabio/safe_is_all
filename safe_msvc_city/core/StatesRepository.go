@@ -25,7 +25,7 @@ func GetStatesInstance() uicore.UIStatesCore {
 func (db *OpenConnection) GetStatesFindAll() ([]entities.States, error) {
 	var states []entities.States
 	db.mux.Lock()
-	result := db.connection.Order(var_db.DB_ORDER_DESC).Find(&states)
+	result := db.connection.Preload("City").Order(var_db.DB_ORDER_DESC).Find(&states)
 	defer db.mux.Unlock()
 	defer database.CloseConnection()
 	return states, result.Error

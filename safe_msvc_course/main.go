@@ -9,6 +9,7 @@ func main() {
 	app := fiber.New()
 
 	routers.NewCourseRouter(app)
+	routers.NewTopicRouter(app)
 	app.Listen(":3007")
 
 }

@@ -25,7 +25,7 @@ func NewTopicRepository() uicore.UITopicCore {
 func (c *OpenConnection) GetTopicFindAll() ([]entities.Topic, error) {
 	var topicEntities []entities.Topic
 	c.mux.Lock()
-	result := c.connection.Order(utils.DB_ORDER_DESC).Find(&topicEntities)
+	result := c.connection.Preload("Course").Order(utils.DB_ORDER_DESC).Find(&topicEntities)
 	defer database.CloseConnection()
 	defer c.mux.Unlock()
 	return topicEntities, result.Error

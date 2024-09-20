@@ -26,3 +26,25 @@ func NewCourseRouter(app *fiber.App) {
 		return MsvcCourse(c)
 	})
 }
+
+func NewTopicRouter(app *fiber.App) {
+	app.Use(middleware.LoggingMiddleware)
+	app.Use(middleware.AuthMiddleware)
+
+	app.Use("/course/topic", middleware.Protected())
+	app.Get("/course/topic", func(c *fiber.Ctx) error {
+		return MsvcCourse(c)
+	})
+	app.Get("/course/topic/:id", func(c *fiber.Ctx) error {
+		return MsvcCourse(c)
+	})
+	app.Post("/course/topic", func(c *fiber.Ctx) error {
+		return MsvcCourse(c)
+	})
+	app.Put("/course/topic/:id", func(c *fiber.Ctx) error {
+		return MsvcCourse(c)
+	})
+	app.Delete("/course/topic/:id", func(c *fiber.Ctx) error {
+		return MsvcCourse(c)
+	})
+}

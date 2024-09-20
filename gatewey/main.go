@@ -6,6 +6,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/safe/auth"
+	"github.com/safe/city"
 	"github.com/safe/course"
 	"github.com/safe/emergencycontact"
 	"github.com/safe/handlers"
@@ -42,6 +43,8 @@ func main() {
 	user.NewUserRouter(app)
 	school.NewSchoolRouter(app)
 	course.NewCourseRouter(app)
+	course.NewTopicRouter(app)
+	city.NewCityRouter(app)
 	// Start server
 	log.Println("Server listening on port 8080")
 	log.Fatal(app.Listen(":8080"))

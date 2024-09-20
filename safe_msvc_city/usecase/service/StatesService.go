@@ -93,6 +93,7 @@ func (s *statesService) CreateState(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
 		utils.STATUS: fiber.StatusCreated,
 		utils.DATA:   result,
+		utils.MESSAGE: utils.CREATED,
 	})
 }
 
@@ -123,6 +124,7 @@ func (s *statesService) UpdateState(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		utils.STATUS: fiber.StatusOK,
 		utils.DATA:   result,
+		utils.MESSAGE: utils.UPDATED,
 	})
 }
 func (s *statesService) DeleteState(c *fiber.Ctx) error {
@@ -144,6 +146,7 @@ func (s *statesService) DeleteState(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		utils.STATUS: fiber.StatusOK,
 		utils.DATA:   result,
+		utils.MESSAGE:utils.REMOVED,
 	})
 }
 
@@ -190,7 +193,6 @@ func MapToStructStates(stateDto *dto.StatesDTO, dataMap map[string]interface{}) 
 }
 func validateField(value map[string]interface{}) string {
 	msg := ""
-
 	if value[utils.NAME] == nil {
 		msg = utils.NAME_FIELD_IS_REQUIRED
 	}

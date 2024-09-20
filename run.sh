@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Lista de subdirectorios donde se encuentran los archivos Go
-directories=("gatewey" "safe_msvc_rol" "safe_msvc_user" "safe_msvc_school")
+directories=("gatewey" "safe_msvc_rol" "safe_msvc_user" "safe_msvc_school" "safe_msvc_course" "safe_msvc_city")
 
 # Recorre cada subdirectorio y ejecuta el archivo Go
 for dir in "${directories[@]}"; do

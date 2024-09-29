@@ -22,13 +22,15 @@ func NewUserRepository() uicore.UIUserCore {
 	return _OPEN
 }
 
-func (c *OpenConnection) GetUserFindAll() ([]entities.User, error) {
+func (c *OpenConnection) GetUserFindAll(begin int) ([]entities.User, int64, error) {
 	var userEntities []entities.User
+	var countUser int64
 	c.mux.Lock()
-	result := c.connection.Order(utils.DB_ORDER_DESC).Find(&userEntities)
+	result := c.connection.Offset(begin).Limit(5).Order(utils.DB_ORDER_DESC).Find(&userEntities)
+	c.connection.Table("users").Count(&countUser)
 	defer database.CloseConnection()
 	defer c.mux.Unlock()
-	return userEntities, result.Error
+	return userEntities, countUser, result.Error
 }
 func (c *OpenConnection) GetUserFindById(id uint) (entities.User, error) {
 	var user entities.User

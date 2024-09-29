@@ -7,7 +7,6 @@ import (
 	"github.com/safe_msvc_course/insfractruture/entities"
 	"github.com/safe_msvc_course/insfractruture/ui/uicore"
 	"github.com/safe_msvc_course/insfractruture/utils"
-	"github.com/safe_msvc_course/usecase/dto"
 )
 
 func NewCourseRepository() uicore.UICourseCore {
@@ -23,10 +22,10 @@ func NewCourseRepository() uicore.UICourseCore {
 	return _OPEN
 }
 
-func (c *OpenConnection) GetCourseFindAll() ([]dto.CourseResponseDTO, error) {
-	var courseEntities []dto.CourseResponseDTO
+func (c *OpenConnection) GetCourseFindAll() ([]entities.Course, error) {
+	var courseEntities []entities.Course
 	c.mux.Lock()
-	result := c.connection.Table("courses").Order(utils.DB_ORDER_DESC).Find(&courseEntities)
+	result := c.connection.Order(utils.DB_ORDER_DESC).Find(&courseEntities)
 	defer database.CloseConnection()
 	defer c.mux.Unlock()
 	return courseEntities, result.Error

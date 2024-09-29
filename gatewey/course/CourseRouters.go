@@ -9,8 +9,8 @@ func NewCourseRouter(app *fiber.App) {
 	app.Use(middleware.LoggingMiddleware)
 	app.Use(middleware.AuthMiddleware)
 
-	app.Use("/course", middleware.Protected())
-	app.Get("/course/", func(c *fiber.Ctx) error {
+	//app.Use("/course", middleware.Protected())
+	app.Get("/course", func(c *fiber.Ctx) error {
 		return MsvcCourse(c)
 	})
 	app.Get("/course/:id", func(c *fiber.Ctx) error {

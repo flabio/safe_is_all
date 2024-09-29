@@ -6,13 +6,13 @@ import (
 	"net/http"
 	"strconv"
 
+	utils "github.com/flabio/safe_constants"
 	"github.com/gofiber/fiber/v2"
 	"github.com/safe_msvc_course/core"
 	"github.com/safe_msvc_course/insfractruture/entities"
 	"github.com/safe_msvc_course/insfractruture/helpers"
 	"github.com/safe_msvc_course/insfractruture/ui/global"
 	"github.com/safe_msvc_course/insfractruture/ui/uicore"
-	"github.com/safe_msvc_course/insfractruture/utils"
 	"github.com/safe_msvc_course/usecase/dto"
 
 	"github.com/ulule/deepcopier"

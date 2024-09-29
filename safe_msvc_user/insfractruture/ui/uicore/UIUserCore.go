@@ -5,7 +5,7 @@ import (
 )
 
 type UIUserCore interface {
-	GetUserFindAll() ([]entities.User, error)
+	GetUserFindAll( begin int) ([]entities.User, int64,error)
 	GetUserFindById(id uint) (entities.User, error)
 	GetUserFindByEmailAndId(id uint, email string) (bool, error)
 	CreateUser(user entities.User) (entities.User, error)

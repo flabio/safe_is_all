@@ -42,10 +42,7 @@ func (s *SchoolService) GetSchoolFindById(c *fiber.Ctx) error {
 	id, _ := strconv.Atoi(c.Params(utils.ID))
 	result, err := s.UiSchool.GetSchoolFindById(uint(id))
 	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-			utils.STATUS: fiber.StatusBadRequest,
-			utils.DATA:   utils.ERROR_QUERY,
-		})
+		return c.Status(fiber.StatusBadRequest).JSON(result)
 	}
 	if result.Id == 0 {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
@@ -53,10 +50,7 @@ func (s *SchoolService) GetSchoolFindById(c *fiber.Ctx) error {
 			utils.MESSAGE: utils.ID_NO_EXIST,
 		})
 	}
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		utils.STATUS: fiber.StatusOK,
-		utils.DATA:   result,
-	})
+	return c.Status(fiber.StatusOK).JSON(result)
 }
 func (s *SchoolService) CreateSchool(c *fiber.Ctx) error {
 	var schoolCreate entities.School
@@ -79,8 +73,6 @@ func (s *SchoolService) CreateSchool(c *fiber.Ctx) error {
 			utils.MESSAGE: utils.STATE_NOT_FOUND,
 		})
 	}
-	log.Println("create")
-	log.Println(schoolCreate)
 	result, err := s.UiSchool.CreateSchool(schoolCreate)
 	if err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{

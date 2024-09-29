@@ -8,8 +8,9 @@ type CourseDTO struct {
 }
 
 type CourseResponseDTO struct {
-	Id       uint   `json:"id"`
-	Name     string `json:"name"`
-	SchoolId uint   `json:"school_id"`
-	Active   bool   `json:"active"`
+	Id         uint   `json:"id"`
+	Name       string `json:"name"`
+	SchoolId   uint   `json:"school_id"`
+	SchoolName string `json:"school_name"`
+	Active     bool   `json:"active"`
 }

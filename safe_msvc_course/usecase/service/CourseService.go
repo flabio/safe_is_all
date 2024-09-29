@@ -1,15 +1,18 @@
 package service
 
 import (
+	"log"
 	"net/http"
 	"strconv"
 
+	utils "github.com/flabio/safe_constants"
 	"github.com/gofiber/fiber/v2"
+	"github.com/safe_msvc_course/clients/school"
 	"github.com/safe_msvc_course/core"
 	"github.com/safe_msvc_course/insfractruture/entities"
 	"github.com/safe_msvc_course/insfractruture/ui/global"
 	"github.com/safe_msvc_course/insfractruture/ui/uicore"
-	"github.com/safe_msvc_course/insfractruture/utils"
+	"github.com/safe_msvc_course/usecase/dto"
 
 	"github.com/ulule/deepcopier"
 )
@@ -24,21 +27,37 @@ func NewCourseService() global.UICourseGlobal {
 
 func (s *CourseService) GetCourseFindAll(c *fiber.Ctx) error {
 	results, err := s.UiCourse.GetCourseFindAll()
+	log.Println("hola flabio")
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			utils.STATUS: fiber.StatusBadRequest,
 			utils.DATA:   utils.ERROR_QUERY,
 		})
 	}
+	var courseResponseDto []dto.CourseResponseDTO
+
+	for _, item := range results {
+		var courseDto dto.CourseResponseDTO
+		dataSchool, _ := school.MsvcSchoolFindId(item.SchoolId, c)
+		if dataSchool.Name == "" {
+			courseDto.SchoolName = "Not School"
+		} else {
+			courseDto.SchoolName = dataSchool.Name
+		}
+		deepcopier.Copy(&item).To(&courseDto)
+		courseResponseDto = append(courseResponseDto, courseDto)
+	}
+
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		utils.STATUS: fiber.StatusOK,
-		utils.DATA:   results,
+		utils.DATA:   courseResponseDto,
 	})
 }
 
 func (s *CourseService) GetCourseFindById(c *fiber.Ctx) error {
 	id, _ := strconv.Atoi(c.Params(utils.ID))
 	result, err := s.UiCourse.GetCourseFindById(uint(id))
+
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			utils.STATUS: fiber.StatusBadRequest,

@@ -9,7 +9,7 @@ func NewUserRouter(app *fiber.App) {
 	app.Use(middleware.LoggingMiddleware)
 	app.Use(middleware.AuthMiddleware)
 
-	app.Use("/user", middleware.Protected())
+	//app.Use("/user", middleware.Protected())
 
 	app.Get("/user/", func(c *fiber.Ctx) error {
 

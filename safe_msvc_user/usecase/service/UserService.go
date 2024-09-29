@@ -2,6 +2,7 @@ package service
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 	"strconv"
 
@@ -27,7 +28,9 @@ func NewUserService() global.UIUserGlobal {
 
 func (s *userService) GetUserFindAll(c *fiber.Ctx) error {
 	var userDto []dto.UserResponseDTO
-	results, err := s.uiUser.GetUserFindAll()
+	limit := 5
+	page, begin := Pagination(c, int(limit))
+	results, countUser, err := s.uiUser.GetUserFindAll(begin)
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			utils.STATUS: fiber.StatusBadRequest,
@@ -51,8 +54,11 @@ func (s *userService) GetUserFindAll(c *fiber.Ctx) error {
 	}
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		utils.STATUS: fiber.StatusOK,
-		utils.DATA:   userDto,
+		utils.STATUS:  fiber.StatusOK,
+		utils.DATA:    userDto,
+		"total_count": countUser,
+		"page_count":  page,
+		"begin":       begin,
 	})
 }
 
@@ -295,4 +301,19 @@ func validateRequired(user dto.UserDTO) string {
 	}
 
 	return msg
+}
+func Pagination(c *fiber.Ctx, limit int) (int, int) {
+	log.Println(c)
+	pageParam := c.Query("page")
+
+	if pageParam == "" {
+		return 1, 0
+	}
+	page, _ := strconv.Atoi(c.Query("page"))
+	if page < 1 {
+		return 1, 0
+	}
+
+	begin := (limit * page) - limit
+	return page, begin
 }

@@ -32,6 +32,16 @@ func (c *OpenConnection) GetUserFindAll(begin int) ([]entities.User, int64, erro
 	defer c.mux.Unlock()
 	return userEntities, countUser, result.Error
 }
+func (c *OpenConnection) GetStudentsFindAll(begin int) ([]entities.User, int64, error) {
+	var userEntities []entities.User
+	var countUser int64
+	c.mux.Lock()
+	result := c.connection.Offset(begin).Limit(5).Order(utils.DB_ORDER_DESC).Where("rol_id=?",3).Find(&userEntities)
+	c.connection.Table("users").Count(&countUser)
+	defer database.CloseConnection()
+	defer c.mux.Unlock()
+	return userEntities, countUser, result.Error
+}
 func (c *OpenConnection) GetUserFindById(id uint) (entities.User, error) {
 	var user entities.User
 	c.mux.Lock()

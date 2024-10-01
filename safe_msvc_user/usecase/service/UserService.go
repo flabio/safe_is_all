@@ -56,12 +56,47 @@ func (s *userService) GetUserFindAll(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		utils.STATUS:  fiber.StatusOK,
 		utils.DATA:    userDto,
-		"total_count": countUser,
-		"page_count":  page,
+		"totalCount":  countUser,
+		"pageCount":   page,
 		"begin":       begin,
 	})
 }
 
+func (s *userService) GetStudentsFindAll(c *fiber.Ctx) error {
+	var userDto []dto.UserResponseDTO
+	limit := 5
+	page, begin := Pagination(c, int(limit))
+	results, countUser, err := s.uiUser.GetStudentsFindAll(begin)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			utils.STATUS: fiber.StatusBadRequest,
+			utils.DATA:   utils.ERROR_QUERY,
+		})
+	}
+	for _, item := range results {
+		var userDtoItem dto.UserResponseDTO
+		dataRol, _ := rol.MsvcRolFindById(item.RolId)
+		dataState, _ := statesstruct.MsvcStateFindById(item.StateId)
+
+		if dataRol.Name == "" {
+			userDtoItem.RolName = "Not Rol"
+		} else {
+			userDtoItem.RolName = dataRol.Name
+		}
+		userDtoItem.StateName = dataState.Name
+
+		deepcopier.Copy(&item).To(&userDtoItem)
+		userDto = append(userDto, userDtoItem)
+	}
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		utils.STATUS:  fiber.StatusOK,
+		utils.DATA:    userDto,
+		"totalCount":  countUser,
+		"pageCount":   page,
+		"begin":       begin,
+	})
+}
 func (s *userService) GetUserFindById(c *fiber.Ctx) error {
 	id, _ := strconv.Atoi(c.Params(utils.ID))
 	result, err := s.uiUser.GetUserFindById(uint(id))
@@ -110,7 +145,7 @@ func (s *userService) CreateUser(c *fiber.Ctx) error {
 		})
 	}
 	userCreate.Password = utils.HashAndSalt([]byte(userCreate.Password))
-	result, err := s.uiUser.CreateUser(userCreate)
+	_, err := s.uiUser.CreateUser(userCreate)
 	if err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
 			utils.STATUS:  http.StatusBadRequest,
@@ -119,7 +154,7 @@ func (s *userService) CreateUser(c *fiber.Ctx) error {
 	}
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		utils.STATUS: http.StatusOK,
-		utils.DATA:   result,
+		utils.DATA:   utils.CREATED,
 	})
 }
 

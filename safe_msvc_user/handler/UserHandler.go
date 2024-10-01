@@ -17,7 +17,9 @@ func NewUserHandler() global.UIUserGlobal {
 func (h *userHandler) GetUserFindAll(c *fiber.Ctx) error {
 	return h.user.GetUserFindAll(c)
 }
-
+func (h *userHandler) GetStudentsFindAll(c *fiber.Ctx) error {
+	return h.user.GetStudentsFindAll(c)
+}
 func (h *userHandler) GetUserFindById(c *fiber.Ctx) error {
 	return h.user.GetUserFindById(c)
 }

@@ -17,6 +17,9 @@ func NewUserRouter(app *fiber.App) {
 	api.Get("/", func(c *fiber.Ctx) error {
 		return handlerUser.GetUserFindAll(c)
 	})
+	api.Get("/students", func(c *fiber.Ctx) error {
+		return handlerUser.GetStudentsFindAll(c)
+	})
 	api.Post("/", func(c *fiber.Ctx) error {
 		return handlerUser.CreateUser(c)
 	})

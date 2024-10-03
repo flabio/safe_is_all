@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"log"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/safe_msvc_course/insfractruture/ui/global"
 	"github.com/safe_msvc_course/usecase/service"
@@ -15,6 +17,7 @@ func NewTopicHandler() global.UITopicGlobal {
 }
 
 func (h *topicHandler) GetTopicFindAll(c *fiber.Ctx) error {
+	log.Println("hola flabio topic")
 	return h.topic.GetTopicFindAll(c)
 }
 

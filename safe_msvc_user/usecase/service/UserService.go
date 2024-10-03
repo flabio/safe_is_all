@@ -97,6 +97,44 @@ func (s *userService) GetStudentsFindAll(c *fiber.Ctx) error {
 		"begin":       begin,
 	})
 }
+
+
+func (s *userService) GetInstructorFindAll(c *fiber.Ctx) error {
+	var userDto []dto.UserResponseDTO
+	limit := 5
+	page, begin := Pagination(c, int(limit))
+	results, countUser, err := s.uiUser.GetInstructorFindAll(begin)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			utils.STATUS: fiber.StatusBadRequest,
+			utils.DATA:   utils.ERROR_QUERY,
+		})
+	}
+	for _, item := range results {
+		var userDtoItem dto.UserResponseDTO
+		dataRol, _ := rol.MsvcRolFindById(item.RolId)
+		dataState, _ := statesstruct.MsvcStateFindById(item.StateId)
+
+		if dataRol.Name == "" {
+			userDtoItem.RolName = "Not Rol"
+		} else {
+			userDtoItem.RolName = dataRol.Name
+		}
+		userDtoItem.StateName = dataState.Name
+
+		deepcopier.Copy(&item).To(&userDtoItem)
+		userDto = append(userDto, userDtoItem)
+	}
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		utils.STATUS:  fiber.StatusOK,
+		utils.DATA:    userDto,
+		"totalCount":  countUser,
+		"pageCount":   page,
+		"begin":       begin,
+	})
+}
+
 func (s *userService) GetUserFindById(c *fiber.Ctx) error {
 	id, _ := strconv.Atoi(c.Params(utils.ID))
 	result, err := s.uiUser.GetUserFindById(uint(id))

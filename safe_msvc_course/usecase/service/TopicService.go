@@ -164,6 +164,7 @@ func ValidateTopic(id uint, s *TopicService, c *fiber.Ctx) (dto.TopicDTO, string
 
 	var dataMap map[string]interface{}
 	err := json.Unmarshal([]byte(body), &dataMap)
+
 	if err != nil {
 		msg = err.Error()
 	}
@@ -179,6 +180,5 @@ func ValidateTopic(id uint, s *TopicService, c *fiber.Ctx) (dto.TopicDTO, string
 	if msgReq != utils.EMPTY {
 		return dto.TopicDTO{}, msgReq
 	}
-
 	return topicDto, msg
 }

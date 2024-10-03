@@ -13,6 +13,7 @@ type User struct {
 	ZipCode      string     `gorm:"type:varchar(150)"`
 	StateId      uint       `gorm:"type:integer"`
 	RolId        uint       `gorm:"type:integer"`
+	Active       bool       `gorm:"type:boolean"  json:"active"`
 	CreatedAt    time.Time  `gorm:"<-:created_at"`
 	UpdatedAt    *time.Time `gorm:"type:TIMESTAMP(6)"`
 	Password     string     `gorm:"type:varchar(255);not null"`

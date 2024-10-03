@@ -12,6 +12,7 @@ type UserDTO struct {
 	StateId      uint   `json:"state_id"`
 	RolId        uint   `json:"rol_id"`
 	Password     string `json:"password"`
+	Active       bool   `json:"active"`
 }
 
 type UserResponseDTO struct {
@@ -27,6 +28,7 @@ type UserResponseDTO struct {
 	RolId        uint   `json:"rol_id"`
 	RolName      string `json:"rol_name"`
 	StateName    string `json:"state_name"`
+	Active       bool   `json:"active"`
 }
 
 type LoginDTO struct {

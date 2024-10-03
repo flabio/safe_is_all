@@ -3,7 +3,6 @@ package routers
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/safe_msvc_course/handler"
-	"github.com/safe_msvc_course/insfractruture/middleware"
 )
 
 var (
@@ -11,8 +10,8 @@ var (
 )
 
 func NewTopicRouter(app *fiber.App) {
-	api := app.Group("/api/course/topic")
-	api.Use(middleware.ValidateToken)
+	api := app.Group("/api/topic")
+	//api.Use(middleware.ValidateToken)
 	api.Get("/", func(c *fiber.Ctx) error {
 		return handlerTopic.GetTopicFindAll(c)
 	})

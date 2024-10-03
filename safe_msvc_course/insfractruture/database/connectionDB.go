@@ -56,7 +56,7 @@ func CreateDatabase() string {
 }
 
 func MigrateDatabase(db *gorm.DB) {
-	db.AutoMigrate(&entities.Course{}, &entities.Topic{})
+	db.AutoMigrate(&entities.Course{}, &entities.Topic{}, &entities.Lenguage{})
 }
 func CloseConnection() {
 	var db *gorm.DB = DatabaseConnection()

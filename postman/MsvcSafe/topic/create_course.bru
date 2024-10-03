@@ -1,0 +1,23 @@
+meta {
+  name: create_course
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{path}}/course
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "name":"betelsofte",
+    "school_id":8,
+    "active":true
+  }
+}

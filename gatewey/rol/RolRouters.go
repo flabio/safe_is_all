@@ -7,7 +7,7 @@ import (
 
 func NewRolRouter(app *fiber.App) {
 	app.Use(middleware.LoggingMiddleware)
-	// app.Use(middleware.AuthMiddleware)
+	app.Use(middleware.AuthMiddleware)
 
 	// app.Use("/rol", middleware.Protected())
 	app.Get("/rol/", func(c *fiber.Ctx) error {

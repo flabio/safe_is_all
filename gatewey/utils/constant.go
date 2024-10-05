@@ -1,6 +1,13 @@
 package utils
 
 const (
+	LiMIT       int    = 5
+	PAGE        string = "page"
+	TOTAL_COUNT string = "totalCount"
+	PAGE_COUNT  string = "pageCount"
+	BEGIN       string = "begin"
+)
+const (
 	ID      string = "id"
 	CITY_ID string = "city_id"
 )

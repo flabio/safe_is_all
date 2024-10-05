@@ -10,12 +10,16 @@ import (
 )
 
 func MsvcLanguage(c *fiber.Ctx) error {
+	pageParam := c.Query(utils.PAGE)
+
 	id := c.Params(utils.ID)
 
 	url := "http://localhost:3007/api/language/"
 
 	if len(id) != 0 && url != "" {
-		url = "http://localhost:3007/api/language/" + id
+		url = url + id
+	} else {
+		url = url + "?page=" + pageParam
 	}
 
 	req, err := http.NewRequest(c.Method(), url, bytes.NewBuffer(c.Body()))

@@ -1,6 +1,13 @@
 package utils
 
 const (
+	LiMIT       int    = 5
+	PAGE        string = "page"
+	TOTAL_COUNT string = "totalCount"
+	PAGE_COUNT  string = "pageCount"
+	BEGIN       string = "begin"
+)
+const (
 	ID                    = "id"
 	MESSAGE               = "message"
 	STATUS                = "status"
@@ -50,7 +57,6 @@ const (
 	TOKEN_INVALID string = "Token not provided or invalid"
 )
 
-
 const USER string = "user"
 const USER_NOT_FOUND string = "username o password incorrect."
 const RECOVER_PANIC string = "Se recuperó de un panic:"
@@ -67,13 +73,13 @@ const STATE_ID string = "state_id"
 const ROL_ID string = "rol_id"
 const EMAIL string = "email"
 const PASSWORD string = "password"
-const TITLE string ="title"
+const TITLE string = "title"
 const TIME_HOURS string = "time_hours"
-const COURSE_ID string ="course_id"
+const COURSE_ID string = "course_id"
 
-const COURSE_ID_IS_FIELD_REQUIRED string="The field course_id is required."
-const TITLE_FIELD_IS_REQUIRED string ="The field title is required."
-const TIME_HOURS_IS_FIELD_REQUIRED string ="The field time_hours is required."
+const COURSE_ID_IS_FIELD_REQUIRED string = "The field course_id is required."
+const TITLE_FIELD_IS_REQUIRED string = "The field title is required."
+const TIME_HOURS_IS_FIELD_REQUIRED string = "The field time_hours is required."
 
 const FIRST_NAME_IS_FIELD_REQUIRED string = "The field first name is required."
 const FIRST_SUR_NAME_IS_FIELD_REQUIRED string = "The field first sur name is required."
@@ -110,9 +116,9 @@ const PASSWORD_IS_REQUIRED string = "The password is required."
 const EMAIL_IS_INVALID string = "The email is invalid."
 const CITY_ID_IS_REQUIRED string = "The city id is required."
 
-const TITLE_IS_REQUIRED string ="The title is required."
-const COURSE_ID_IS_REQUIRED string ="The course id is required."
-const TIME_HOURS_IS_REQUIRED string ="The time hours is required."
+const TITLE_IS_REQUIRED string = "The title is required."
+const COURSE_ID_IS_REQUIRED string = "The course id is required."
+const TIME_HOURS_IS_REQUIRED string = "The time hours is required."
 const PASSWORD_IS_INVALID_LENGTH string = "The password must have a minimum length of 8 characters."
 const MSVC_ROL_URL string = "http://localhost:3001/api/rol"
 const MSVC_EMERGENCY_CONTACT_URL string = "http://localhost:3003/api/emergency"

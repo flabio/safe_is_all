@@ -101,7 +101,7 @@ func (s *TopicService) UpdateTopic(c *fiber.Ctx) error {
 			utils.MESSAGE: utils.ID_NO_EXIST,
 		})
 	}
-	deepcopier.Copy(result).To(&updatedCourse)
+	
 	courseDto, msgError := ValidateTopic(uint(id), s, c)
 	if msgError != utils.EMPTY {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
@@ -110,7 +110,7 @@ func (s *TopicService) UpdateTopic(c *fiber.Ctx) error {
 		})
 	}
 	deepcopier.Copy(courseDto).To(&updatedCourse)
-	user, err := s.UiTopic.UpdateTopic(uint(id), updatedCourse)
+	data, err := s.UiTopic.UpdateTopic(uint(id), updatedCourse)
 	if err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
 			utils.STATUS:  http.StatusBadRequest,
@@ -120,7 +120,7 @@ func (s *TopicService) UpdateTopic(c *fiber.Ctx) error {
 	return c.Status(http.StatusOK).JSON(fiber.Map{
 		utils.STATUS:  http.StatusOK,
 		utils.MESSAGE: utils.UPDATED,
-		utils.DATA:    user,
+		utils.DATA:    data,
 	})
 }
 func (s *TopicService) DeleteTopic(c *fiber.Ctx) error {

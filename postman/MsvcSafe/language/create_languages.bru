@@ -1,11 +1,11 @@
 meta {
-  name: list_languages
+  name: create_languages
   type: http
   seq: 1
 }
 
 post {
-  url: http://localhost:3007/api/language
+  url: {{path}}/language
   body: json
   auth: bearer
 }

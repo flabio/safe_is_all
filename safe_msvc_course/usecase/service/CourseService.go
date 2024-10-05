@@ -99,7 +99,7 @@ func (s *CourseService) UpdateCourse(c *fiber.Ctx) error {
 			utils.MESSAGE: utils.ID_NO_EXIST,
 		})
 	}
-	deepcopier.Copy(result).To(&updatedCourse)
+	
 	courseDto, msgError := ValidateCourse(uint(id), s, c)
 	if msgError != utils.EMPTY {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{

@@ -1,0 +1,22 @@
+meta {
+  name: lists_language
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{path}}/language
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "name":"tets",
+    "active":true
+  }
+}

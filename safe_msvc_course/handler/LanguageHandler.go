@@ -21,7 +21,7 @@ func (l *languageHanlder) CreateLanguage(c *fiber.Ctx) error {
 
 // DeleteLanguageById implements global.UILanguageGlobal.
 func (l *languageHanlder) DeleteLanguageById(c *fiber.Ctx) error {
-	return l.DeleteLanguageById(c)
+	return l.language.DeleteLanguageById(c)
 }
 
 // GetLanguageFindAll implements global.UILanguageGlobal.
@@ -31,7 +31,7 @@ func (l *languageHanlder) GetLanguageFindAll(c *fiber.Ctx) error {
 
 // GetLanguageFindById implements global.UILanguageGlobal.
 func (l *languageHanlder) GetLanguageFindById(c *fiber.Ctx) error {
-	return l.GetLanguageFindById(c)
+	return l.language.GetLanguageFindById(c)
 }
 
 // UpdateLanguageById implements global.UILanguageGlobal.

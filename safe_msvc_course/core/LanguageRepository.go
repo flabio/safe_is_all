@@ -22,13 +22,15 @@ func NewLanguageRepository() uicore.UILanguage {
 	return _OPEN
 }
 
-func (c *OpenConnection) GetLanguageFindAll() ([]entities.Language, error) {
+func (c *OpenConnection) GetLanguageFindAll(begin int) ([]entities.Language,int64, error) {
 	var languageEntities []entities.Language
+	var countLanguage int64
 	c.mux.Lock()
-	result := c.connection.Order(utils.DB_ORDER_DESC).Find(&languageEntities)
+	result := c.connection.Offset(begin).Limit(5).Order(utils.DB_ORDER_DESC).Find(&languageEntities)
+	c.connection.Table("languages").Count(&countLanguage)
 	defer database.CloseConnection()
 	defer c.mux.Unlock()
-	return languageEntities, result.Error
+	return languageEntities,countLanguage, result.Error
 }
 func (c *OpenConnection) GetLanguageFindById(id uint) (entities.Language, error) {
 	var language entities.Language
@@ -63,14 +65,19 @@ func (c *OpenConnection) DeleteLanguageById(id uint) (bool, error) {
 	return err == nil, err
 }
 
-func (c *OpenConnection) DuplicateLanguageName(name string) (bool, error) {
+func (c *OpenConnection) DuplicateLanguageName(id uint, name string) (bool, error) {
 	c.mux.Lock()
 	var language entities.Language
-	result := c.connection.Where(utils.DB_EQUAL_NAME, name).Delete(&language)
+
+	query := c.connection.Where(utils.DB_EQUAL_NAME, name)
+	if id>0{
+		query=query.Where(utils.DB_DIFF_ID,id)
+	}
+	query=query.Find(&language)
 	defer database.CloseConnection()
 	defer c.mux.Unlock()
-	if result.RowsAffected == 1 {
-		return true, result.Error
+	if query.RowsAffected == 1 {
+		return true, query.Error
 	}
-	return false, result.Error
+	return false, query.Error
 }

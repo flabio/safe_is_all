@@ -1,0 +1,22 @@
+meta {
+  name: update_by_id
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{path}}/language/3
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "name":"ruso",
+    "active":true
+  }
+}

@@ -50,6 +50,7 @@ func main() {
 	school.NewSchoolRouter(app)
 	course.NewCourseRouter(app)
 	course.NewTopicRouter(app)
+	course.NewLanguageRouter(app)
 	city.NewCityRouter(app)
 	// Start server
 	log.Println("Server listening on port 8080")

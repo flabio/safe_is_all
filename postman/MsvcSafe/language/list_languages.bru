@@ -1,0 +1,22 @@
+meta {
+  name: list_languages
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:3007/api/language
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "Name":"inglesh",
+    "active":true
+  }
+}

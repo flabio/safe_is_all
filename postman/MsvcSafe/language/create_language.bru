@@ -1,0 +1,22 @@
+meta {
+  name: create_language
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:3007/api/language
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "name":"tets",
+    "active":true
+  }
+}

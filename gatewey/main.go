@@ -27,14 +27,20 @@ func main() {
 	// Ruta para la documentación Swagger
 	app.Get("/swagger/*", swagger.HandlerDefault) // swagger.HandlerDefault es el handler predeterminado
 	// default
-	app.Use(cors.New(cors.Config{
-		AllowOrigins:     "http://localhost:5173/", // Specify allowed origins
+	//http://localhost:81/auth/login
+	/*app.Use(cors.New(cors.Config{
+		AllowOrigins:     "http://localhost:81/", // Specify allowed origins
 		AllowMethods:     "GET,POST,PUT,DELETE",
 		AllowHeaders:     "Content-Type, Authorization",
 		ExposeHeaders:    "Content-Length",
 		AllowCredentials: true, // Allow credentials
+	}))*/
+	// Enable CORS with specific settings
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "http://localhost:5173", // Specify the origin that is allowed to make requests
+		AllowHeaders: "Origin, Content-Type, Accept, Authorization",
+		AllowMethods: "GET, POST, PUT, DELETE, OPTIONS",
 	}))
-
 	// Ruta para el login
 	app.Post("/login", handlers.Login)
 
@@ -53,6 +59,6 @@ func main() {
 	course.NewLanguageRouter(app)
 	city.NewCityRouter(app)
 	// Start server
-	log.Println("Server listening on port 8080")
-	log.Fatal(app.Listen(":8080"))
+	log.Println("Server listening on port 3080")
+	log.Fatal(app.Listen(":3080"))
 }

@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -54,36 +55,45 @@ func (s *SchoolService) GetSchoolFindById(c *fiber.Ctx) error {
 }
 func (s *SchoolService) CreateSchool(c *fiber.Ctx) error {
 	var schoolCreate entities.School
+	// Definir las claves esperadas
 
-	dataDto, msgError := ValidateSchool(0, s, c)
+	schoolDto, msgError := ValidateSchool(0, s, c)
+
 	if msgError != utils.EMPTY {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
 			utils.STATUS:  http.StatusBadRequest,
 			utils.MESSAGE: msgError,
+			utils.DATA:    msgError,
 		})
 	}
+	log.Println(schoolDto)
+	// Manejar el archivo subido
+	fileHeader, err := c.FormFile("file")
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).SendString("No se pudo obtener el archivo")
+	}
+	log.Println("Archivo recibido:", fileHeader.Filename)
 
-	deepcopier.Copy(dataDto).To(&schoolCreate)
-	log.Println(schoolCreate)
-	stateExit, _ := statesstruct.MsvcStateFindById(dataDto.StateId, c)
-	log.Println(stateExit)
-	if stateExit.Id == 0 {
-		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
-			utils.STATUS:  http.StatusBadRequest,
-			utils.MESSAGE: utils.STATE_NOT_FOUND,
-		})
+	// Guardar el archivo (opcional)
+	filePath := fmt.Sprintf("./uploads/%s", fileHeader.Filename)
+	log.Println(filePath)
+	err = c.SaveFile(fileHeader, filePath)
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).SendString("No se pudo guardar el archivo")
 	}
-	result, err := s.UiSchool.CreateSchool(schoolCreate)
+	deepcopier.Copy(schoolDto).To(&schoolCreate)
+	data, err := s.UiSchool.CreateSchool(schoolCreate)
 	if err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
 			utils.STATUS:  http.StatusBadRequest,
-			utils.MESSAGE: utils.ERROR_CREATE,
+			utils.MESSAGE: utils.ERROR_UPDATE,
 		})
 	}
+
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		utils.STATUS:  http.StatusOK,
 		utils.MESSAGE: utils.CREATED,
-		utils.DATA:    result,
+		utils.DATA:    data,
 	})
 }
 

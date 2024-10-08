@@ -1,7 +1,6 @@
 package service
 
 import (
-	"encoding/json"
 	"log"
 
 	utils "github.com/flabio/safe_constants"
@@ -18,24 +17,36 @@ func ValidateSchool(id uint, s *SchoolService, c *fiber.Ctx) (dto.SchoolDTO, str
 	}()
 	var schoolDto dto.SchoolDTO
 	var msg string = utils.EMPTY
-	body := c.Body()
 
-	var dataMap map[string]interface{}
-	err := json.Unmarshal([]byte(body), &dataMap)
-	if err != nil {
-		msg = err.Error()
+	dataMap := make(map[string]string)
+	fields := []string{
+		"name", "email", "address", "phone", "zip_code", "provider_number", "state_id",
 	}
 
-	msgValid := helpers.ValidateField(dataMap)
+	// Iterar sobre las claves y obtener el valor para cada una
+	for _, field := range fields {
+		value := c.FormValue(field)
+
+		if value != "" {
+
+			dataMap[field] = value
+		} else {
+			dataMap[field] = ""
+		}
+	}
+	for field, value := range dataMap {
+		if value == "" || len(value) == 0 {
+			msg = field + " is required"
+			return dto.SchoolDTO{}, msg
+		}
+	}
+	helpers.MapToStructSchool(&schoolDto, dataMap)
+
+	/*msgValid := helpers.ValidateField(dataMap)
 	if msgValid != utils.EMPTY {
 		return dto.SchoolDTO{}, msgValid
 	}
-
-	helpers.MapToStructSchool(&schoolDto, dataMap)
-	msgReq := helpers.ValidateRequired(schoolDto)
-	if msgReq != utils.EMPTY {
-		return dto.SchoolDTO{}, msgReq
-	}
+	*/
 	existEmail, _ := s.UiSchool.GetSchoolFindByEmail(id, schoolDto.Email)
 	if existEmail.Email != utils.EMPTY {
 		msg = utils.EMAIL_ALREADY_EXIST
@@ -44,7 +55,5 @@ func ValidateSchool(id uint, s *SchoolService, c *fiber.Ctx) (dto.SchoolDTO, str
 	if existProviderNumber.ProviderNumber != utils.EMPTY {
 		msg = "The Provider number ready exists "
 	}
-	log.Println("schoolDto")
-	log.Println(schoolDto)
 	return schoolDto, msg
 }

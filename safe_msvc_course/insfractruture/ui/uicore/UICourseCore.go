@@ -7,7 +7,7 @@ import (
 type UICourseCore interface {
 	GetCourseFindAll() ([]entities.Course, error)
 	GetCourseFindById(id uint) (entities.Course, error)
-	GetCourseFindByEmail(id uint, email string) (entities.Course, error)
+	IsDuplicatedCourseName(id uint, name string) (bool, error)
 	CreateCourse(course entities.Course) (entities.Course, error)
 	UpdateCourse(id uint, course entities.Course) (entities.Course, error)
 	DeleteCourse(id uint) (bool, error)

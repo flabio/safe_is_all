@@ -51,8 +51,8 @@ func ValidateField(value map[string]interface{}) string {
 	if value[utils.PROVIDER_NUMBER] == nil {
 		msg = utils.PROVIDER_NUMBER_IS_FIELD_REQUIRED
 	}
-	if value[utils.STATE_ID] == nil {
+	/*if value[utils.STATE_ID] == nil {
 		msg = utils.STATE_ID_IS_FIELD_REQUIRED
-	}
+	}*/
 	return msg
 }

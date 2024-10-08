@@ -6,7 +6,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/safe_msvc_course/insfractruture/helpers"
-	utils "github.com/flabio/safe_constants"
+	"github.com/safe_msvc_course/insfractruture/utils"
 	"github.com/safe_msvc_course/usecase/dto"
 )
 
@@ -31,11 +31,15 @@ func ValidateCourse(id uint, s *CourseService, c *fiber.Ctx) (dto.CourseDTO, str
 		return dto.CourseDTO{}, msgValid
 	}
 
-	helpers.MapToStructCourse(&courseDto, dataMap)
-	
+	helpers.MapToStruct(dataMap, &courseDto)
+
 	msgReq := helpers.ValidateRequired(courseDto)
 	if msgReq != utils.EMPTY {
 		return dto.CourseDTO{}, msgReq
+	}
+	IsNameExist, _ := s.UiCourse.IsDuplicatedCourseName(courseDto.Id, courseDto.Name)
+	if IsNameExist {
+		msg = utils.NAME_ALREADY_EXIST
 	}
 
 	return courseDto, msg

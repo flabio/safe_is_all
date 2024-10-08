@@ -38,19 +38,6 @@ func (c *OpenConnection) GetCourseFindById(id uint) (entities.Course, error) {
 	defer c.mux.Unlock()
 	return course, result.Error
 }
-func (c *OpenConnection) GetCourseFindByEmail(id uint, email string) (entities.Course, error) {
-	var course entities.Course
-	c.mux.Lock()
-	query := c.connection.Where(utils.DB_EQUAL_EMAIL_ID, email)
-	if id > 0 {
-		query = query.Where(utils.DB_DIFF_ID, id)
-	}
-	query = query.Find(&course)
-
-	defer database.CloseConnection()
-	defer c.mux.Unlock()
-	return course, query.Error
-}
 
 func (c *OpenConnection) CreateCourse(course entities.Course) (entities.Course, error) {
 	c.mux.Lock()
@@ -74,4 +61,17 @@ func (c *OpenConnection) DeleteCourse(id uint) (bool, error) {
 	defer database.CloseConnection()
 	defer c.mux.Unlock()
 	return err == nil, err
+}
+func (c *OpenConnection) IsDuplicatedCourseName(id uint, name string) (bool, error) {
+	c.mux.Lock()
+	var course entities.Course
+	query := c.connection.Where(utils.DB_EQUAL_NAME, name)
+	if id > 0 {
+		query = query.Where(utils.DB_DIFF_ID, id)
+	}
+	query = query.Find(&course)
+
+	defer database.CloseConnection()
+	defer c.mux.Unlock()
+	return query.RowsAffected == 1, query.Error
 }

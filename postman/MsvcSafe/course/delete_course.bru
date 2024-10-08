@@ -1,11 +1,11 @@
 meta {
-  name: create_course
+  name: delete_course
   type: http
-  seq: 2
+  seq: 4
 }
 
-post {
-  url: {{path}}/course
+delete {
+  url: {{path}}/course/13
   body: json
   auth: bearer
 }
@@ -16,7 +16,7 @@ auth:bearer {
 
 body:json {
   {
-    "name":"bestelsofte",
+    "name":"test 18",
     "active":true
   }
 }

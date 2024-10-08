@@ -30,12 +30,14 @@ const (
 	EMAIL_ALREADY_EXIST = "Email already exists"
 )
 const (
-	NAME     = "name"
-	ADDRESS  = "address"
-	PHONE    = "phone"
-	ZIP_CODE = "zip_code"
-	EMAIL    = "email"
-	ACTIVE   = "active"
+	NAME           = "name"
+	ADDRESS        = "address"
+	PHONE          = "phone"
+	ZIP_CODE       = "zip_code"
+	EMAIL          = "email"
+	ACTIVE         = "active"
+	SCHOOL_ID      = "school_id"
+	
 )
 const (
 	NAME_IS_FIELD_REQUIRED    = "The field name is required."
